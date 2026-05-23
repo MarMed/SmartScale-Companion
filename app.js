@@ -655,7 +655,7 @@ function updateConnectButtons(status) {
         elements.btnConnect.textContent = 'Connect Scale';
         elements.btnConnect.className = 'btn btn-primary';
         
-        elements.btnCoffeeConnect.innerHTML = '<i class="fa-solid fa-bluetooth"></i> Connect Scale';
+        elements.btnCoffeeConnect.innerHTML = '<i class="fa-brands fa-bluetooth"></i> Connect Scale';
         elements.btnCoffeeConnect.className = 'btn btn-primary';
     } else if (status === 'connecting') {
         elements.btnConnect.textContent = 'Cancel';
