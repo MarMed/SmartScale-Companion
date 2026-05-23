@@ -667,12 +667,31 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 600px) {
-    .sim-widget-floating {
+    /* When simulator is enabled (checked) on mobile, keep it floating fixed at the bottom */
+    .sim-widget-floating:has(#sim-switch:checked) {
+        position: fixed;
         bottom: 1rem;
         right: 1rem;
         left: 1rem;
         width: auto;
         max-width: none;
+        z-index: 1000;
+    }
+    
+    /* When simulator is disabled (unchecked) on mobile, dock it statically at the bottom of the page flow */
+    .sim-widget-floating:not(:has(#sim-switch:checked)) {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        margin: 1.5rem auto 0 auto;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: none;
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
 }
 
