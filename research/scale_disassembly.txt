@@ -1,0 +1,1396 @@
+=== scale_parser & BluetoothScale Disassembly ===
+
+
+==================================================
+SYMBOL: _ZN12scale_parser10packetTypeEhPh (Address: 0x0000000000b838f8)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b838f8 <_ZN12scale_parser10packetTypeEhPh>:
+b838f8: 72001c1f     	tst	w0, #0xff
+b838fc: 540002a0     	b.eq	0xb83950 <_ZN12scale_parser10packetTypeEhPh+0x58>
+b83900: b00032a8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b83904: f9463109     	ldr	x9, [x8, #0xc60]
+b83908: b4000249     	cbz	x9, 0xb83950 <_ZN12scale_parser10packetTypeEhPh+0x58>
+b8390c: 39400028     	ldrb	w8, [x1]
+b83910: b00032ab     	adrp	x11, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b83914: 9131816b     	add	x11, x11, #0xc60
+b83918: aa0b03ea     	mov	x10, x11
+b8391c: b9401d2c     	ldr	w12, [x9, #0x1c]
+b83920: 6b08019f     	cmp	w12, w8
+b83924: 1a9fa7ec     	cset	w12, lt
+b83928: 9a89b14a     	csel	x10, x10, x9, lt
+b8392c: f86c5929     	ldr	x9, [x9, w12, uxtw #3]
+b83930: b5ffff69     	cbnz	x9, 0xb8391c <_ZN12scale_parser10packetTypeEhPh+0x24>
+b83934: eb0b015f     	cmp	x10, x11
+b83938: 540000c0     	b.eq	0xb83950 <_ZN12scale_parser10packetTypeEhPh+0x58>
+b8393c: b9401d49     	ldr	w9, [x10, #0x1c]
+b83940: 6b08013f     	cmp	w9, w8
+b83944: 32001fe8     	orr	w8, wzr, #0xff
+b83948: 1a89c100     	csel	w0, w8, w9, gt
+b8394c: d65f03c0     	ret
+b83950: 32001fe0     	orr	w0, wzr, #0xff
+b83954: d65f03c0     	ret
+
+0000000000b83958 <_ZN12scale_parser14packetResponseEh>:
+b83958: b00032a8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b8395c: f9463d09     	ldr	x9, [x8, #0xc78]
+b83960: b4000249     	cbz	x9, 0xb839a8 <_ZN12scale_parser14packetResponseEh+0x50>
+b83964: b00032ab     	adrp	x11, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b83968: 9131e16b     	add	x11, x11, #0xc78
+b8396c: 12001c0a     	and	w10, w0, #0xff
+b83970: aa0b03e8     	mov	x8, x11
+b83974: b9401d2c     	ldr	w12, [x9, #0x1c]
+b83978: 6b0a019f     	cmp	w12, w10
+b8397c: 1a9fa7ec     	cset	w12, lt
+b83980: 9a89b108     	csel	x8, x8, x9, lt
+b83984: f86c5929     	ldr	x9, [x9, w12, uxtw #3]
+b83988: b5ffff69     	cbnz	x9, 0xb83974 <_ZN12scale_parser14packetResponseEh+0x1c>
+b8398c: eb0b011f     	cmp	x8, x11
+b83990: 54000100     	b.eq	0xb839b0 <_ZN12scale_parser14packetResponseEh+0x58>
+b83994: b9401d09     	ldr	w9, [x8, #0x1c]
+b83998: 6b0a013f     	cmp	w9, w10
+b8399c: 540000ed     	b.le	0xb839b8 <_ZN12scale_parser14packetResponseEh+0x60>
+b839a0: 32001fe0     	orr	w0, wzr, #0xff
+b839a4: d65f03c0     	ret
+b839a8: 32001fe0     	orr	w0, wzr, #0xff
+b839ac: d65f03c0     	ret
+b839b0: 32001fe0     	orr	w0, wzr, #0xff
+b839b4: d65f03c0     	ret
+b839b8: b9402100     	ldr	w0, [x8, #0x20]
+b839bc: d65f03c0     	ret
+
+0000000000b839c0 <_ZN12scale_parser14parseRawWeightEhPh>:
+b839c0: 39400428     	ldrb	w8, [x1, #0x1]
+b839c4: 39400829     	ldrb	w9, [x1, #0x2]
+b839c8: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839cc: 33181d28     	bfi	w8, w9, #8, #8
+b839d0: 33103d48     	bfi	w8, w10, #16, #16
+b839d4: 13005d00     	sbfx	w0, w8, #0, #24
+b839d8: d65f03c0     	ret
+
+0000000000b839dc <_ZN12scale_parser16parseScaleWeightEhPh>:
+b839dc: 39400428     	ldrb	w8, [x1, #0x1]
+b839e0: 39400829     	ldrb	w9, [x1, #0x2]
+b839e4: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839e8: d0001c0b     	adrp	x11, 0xf05000 <_ZN5CRC325tableE+0x10d4>
+b839ec: bd44c160     	ldr	s0, [x11, #0x4c0]
+b839f0: 33181d28     	bfi	w8, w9, #8, #8
+b839f4: 33103d48     	bfi	w8, w10, #16, #16
+b839f8: 13005d08     	sbfx	w8, w8, #0, #24
+b839fc: 1e220101     	scvtf	s1, w8
+b83a00: 1e200820     	fmul	s0, s1, s0
+b83a04: d65f03c0     	ret
+
+0000000000b83a08 <_ZN12scale_parser15parseProtocolHWEhPh>:
+b83a08: d10503ff     	sub	sp, sp, #0x140
+b83a0c: a9105ffc     	stp	x28, x23, [sp, #0x100]
+b83a10: a91157f6     	stp	x22, x21, [sp, #0x110]
+b83a14: a9124ff4     	stp	x20, x19, [sp, #0x120]
+b83a18: a9137bfd     	stp	x29, x30, [sp, #0x130]
+b83a1c: 9104c3fd     	add	x29, sp, #0x130
+b83a20: d53bd054     	mrs	x20, TPIDR_EL0
+b83a24: aa0803f3     	mov	x19, x8
+b83a28: f9401688     	ldr	x8, [x20, #0x28]
+b83a2c: aa1303f5     	mov	x21, x19
+b83a30: 32001fe9     	orr	w9, wzr, #0xff
+b83a34: f81c83a8     	stur	x8, [x29, #-0x38]
+b83a38: f8020ebf     	str	xzr, [x21, #0x20]!
+b83a3c: a902fe7f     	stp	xzr, xzr, [x19, #0x28]
+b83a40: 39400428     	ldrb	w8, [x1, #0x1]
+b83a44: b9000268     	str	w8, [x19]
+b83a48: 39400828     	ldrb	w8, [x1, #0x2]
+b83a4c: b9000668     	str	w8, [x19, #0x4]
+b83a50: 39400c28     	ldrb	w8, [x1, #0x3]
+b83a54: b9000a68     	str	w8, [x19, #0x8]
+b83a58: 39401028     	ldrb	w8, [x1, #0x4]
+b83a5c: b9000e68     	str	w8, [x19, #0xc]
+b83a60: 39401428     	ldrb	w8, [x1, #0x5]
+b83a64: b9001268     	str	w8, [x19, #0x10]
+b83a68: 39401828     	ldrb	w8, [x1, #0x6]
+b83a6c: 2902a668     	stp	w8, w9, [x19, #0x14]
+b83a70: d0001de1     	adrp	x1, 0xf41000 <sm2_asn1_meth+0x15f90>
+b83a74: 910c8c21     	add	x1, x1, #0x323
+b83a78: 9100c3e0     	add	x0, sp, #0x30
+b83a7c: 97e2c429     	bl	0x434b20 <_ZN5boost12basic_formatIcNSt6__ndk111char_traitsIcEENS1_9allocatorIcEEEC2EPKc@plt>
+b83a80: 91003268     	add	x8, x19, #0xc
+b83a84: 90003156     	adrp	x22, 0x11ab000
+b83a88: f945c2d6     	ldr	x22, [x22, #0xb80]
+b83a8c: f9000fe8     	str	x8, [sp, #0x18]
+b83a90: b0003157     	adrp	x23, 0x11ac000
+b83a94: 3941b3e9     	ldrb	w9, [sp, #0x6c]
+b83a98: f946baf7     	ldr	x23, [x23, #0xd70]
+b83a9c: 9e6702c0     	fmov	d0, x22
+b83aa0: 4e181ee0     	mov	v0.d[1], x23
+b83aa4: 3c8203e0     	stur	q0, [sp, #0x20]
+b83aa8: 34000709     	cbz	w9, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83aac: a94323ec     	ldp	x12, x8, [sp, #0x30]
+b83ab0: eb0c011f     	cmp	x8, x12
+b83ab4: 54000420     	b.eq	0xb83b38 <_ZN12scale_parser15parseProtocolHWEhPh+0x130>
+b83ab8: b203ebea     	mov	x10, #-0x1111111111111112 // =-1229782938247303442
+b83abc: aa1f03e8     	mov	x8, xzr
+b83ac0: aa1f03e9     	mov	x9, xzr
+b83ac4: f29dddea     	movk	x10, #0xeeef
+b83ac8: 320003eb     	orr	w11, wzr, #0x1
+b83acc: f9402bed     	ldr	x13, [sp, #0x50]
+b83ad0: b400014d     	cbz	x13, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83ad4: b8a8698d     	ldrsw	x13, [x12, x8]
+b83ad8: 37f8010d     	tbnz	w13, #0x1f, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83adc: f94027ee     	ldr	x14, [sp, #0x48]
+b83ae0: d343fdaf     	lsr	x15, x13, #3
+b83ae4: 927de5ef     	and	x15, x15, #0x1ffffffffffffff8
+b83ae8: 9acd216d     	lsl	x13, x11, x13
+b83aec: f86f69ce     	ldr	x14, [x14, x15]
+b83af0: ea0d01df     	tst	x14, x13
+b83af4: 54000121     	b.ne	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83af8: 8b08018c     	add	x12, x12, x8
+b83afc: 3940218d     	ldrb	w13, [x12, #0x8]
+b83b00: 3700006d     	tbnz	w13, #0x0, 0xb83b0c <_ZN12scale_parser15parseProtocolHWEhPh+0x104>
+b83b04: 7900119f     	strh	wzr, [x12, #0x8]
+b83b08: 14000004     	b	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83b0c: f9400d8d     	ldr	x13, [x12, #0x18]
+b83b10: 390001bf     	strb	wzr, [x13]
+b83b14: f900099f     	str	xzr, [x12, #0x10]
+
+
+==================================================
+SYMBOL: _ZN12scale_parser13button_stringENS_18standardUpdateBitsE (Address: 0x0000000000b84094)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b84094 <_ZN12scale_parser13button_stringENS_18standardUpdateBitsE>:
+b84094: 51000409     	sub	w9, w0, #0x1
+b84098: 71007d3f     	cmp	w9, #0x1f
+b8409c: 540002e8     	b.hi	0xb840f8 <_ZN12scale_parser13button_stringENS_18standardUpdateBitsE+0x64>
+b840a0: b0001c0a     	adrp	x10, 0xf05000 <_ZN5CRC325tableE+0x10d4>
+b840a4: 9113114a     	add	x10, x10, #0x4c4
+b840a8: 1000008b     	adr	x11, 0xb840b8 <_ZN12scale_parser13button_stringENS_18standardUpdateBitsE+0x24>
+b840ac: 3869694c     	ldrb	w12, [x10, x9]
+b840b0: 8b0c096b     	add	x11, x11, x12, lsl #2
+b840b4: d61f0160     	br	x11
+b840b8: 321e03e9     	orr	w9, wzr, #0x4
+b840bc: 5289c9ea     	mov	w10, #0x4e4f            // =20047
+b840c0: a9007d1f     	stp	xzr, xzr, [x8]
+b840c4: f900091f     	str	xzr, [x8, #0x10]
+b840c8: 39000109     	strb	w9, [x8]
+b840cc: 7800110a     	sturh	w10, [x8, #0x1]
+b840d0: 39000d1f     	strb	wzr, [x8, #0x3]
+b840d4: d65f03c0     	ret
+b840d8: 5288c9ea     	mov	w10, #0x464f            // =17999
+b840dc: 321f07e9     	orr	w9, wzr, #0x6
+b840e0: 72a008ca     	movk	w10, #0x46, lsl #16
+b840e4: a9007d1f     	stp	xzr, xzr, [x8]
+b840e8: f900091f     	str	xzr, [x8, #0x10]
+b840ec: 39000109     	strb	w9, [x8]
+b840f0: b800110a     	stur	w10, [x8, #0x1]
+b840f4: d65f03c0     	ret
+b840f8: d289caaa     	mov	x10, #0x4e55            // =20053
+b840fc: f2a9c96a     	movk	x10, #0x4e4b, lsl #16
+b84100: f2cae9ea     	movk	x10, #0x574f, lsl #32
+b84104: 321f0be9     	orr	w9, wzr, #0xe
+b84108: f2e009ca     	movk	x10, #0x4e, lsl #48
+b8410c: a9007d1f     	stp	xzr, xzr, [x8]
+b84110: f900091f     	str	xzr, [x8, #0x10]
+b84114: 39000109     	strb	w9, [x8]
+b84118: f800110a     	stur	x10, [x8, #0x1]
+b8411c: d65f03c0     	ret
+b84120: 52898049     	mov	w9, #0x4c02             // =19458
+b84124: a9007d1f     	stp	xzr, xzr, [x8]
+b84128: f900091f     	str	xzr, [x8, #0x10]
+b8412c: 79000109     	strh	w9, [x8]
+b84130: 3900091f     	strb	wzr, [x8, #0x2]
+b84134: d65f03c0     	ret
+b84138: a9007d1f     	stp	xzr, xzr, [x8]
+b8413c: f900091f     	str	xzr, [x8, #0x10]
+b84140: 528a4049     	mov	w9, #0x5202             // =20994
+b84144: 79000109     	strh	w9, [x8]
+b84148: 3900091f     	strb	wzr, [x8, #0x2]
+b8414c: d65f03c0     	ret
+b84150: d289e98a     	mov	x10, #0x4f4c            // =20300
+b84154: f2abeaea     	movk	x10, #0x5f57, lsl #16
+b84158: f2c8284a     	movk	x10, #0x4142, lsl #32
+b8415c: 321c03e9     	orr	w9, wzr, #0x10
+b84160: f2ea8a8a     	movk	x10, #0x5454, lsl #48
+b84164: a9007d1f     	stp	xzr, xzr, [x8]
+b84168: f900091f     	str	xzr, [x8, #0x10]
+b8416c: 39000109     	strb	w9, [x8]
+b84170: f800110a     	stur	x10, [x8, #0x1]
+b84174: 3900251f     	strb	wzr, [x8, #0x9]
+b84178: d65f03c0     	ret
+b8417c: b0001c0a     	adrp	x10, 0xf05000 <_ZN5CRC325tableE+0x10d4>
+b84180: 9121394a     	add	x10, x10, #0x84e
+b84184: f940014a     	ldr	x10, [x10]
+b84188: 52800249     	mov	w9, #0x12               // =18
+b8418c: 528008ab     	mov	w11, #0x45              // =69
+b84190: a9007d1f     	stp	xzr, xzr, [x8]
+b84194: f900091f     	str	xzr, [x8, #0x10]
+b84198: 39000109     	strb	w9, [x8]
+b8419c: 3900250b     	strb	w11, [x8, #0x9]
+b841a0: f800110a     	stur	x10, [x8, #0x1]
+b841a4: 3900291f     	strb	wzr, [x8, #0xa]
+b841a8: d65f03c0     	ret
+
+0000000000b841ac <_ZN12scale_parser11parse_touchEhPh>:
+b841ac: 39400428     	ldrb	w8, [x1, #0x1]
+b841b0: aa0803e9     	mov	x9, x8
+b841b4: b36b1d09     	bfi	x9, x8, #21, #8
+b841b8: aa083929     	orr	x9, x9, x8, lsl #14
+b841bc: aa081d29     	orr	x9, x9, x8, lsl #7
+b841c0: aa087129     	orr	x9, x9, x8, lsl #28
+b841c4: aa088d28     	orr	x8, x9, x8, lsl #35
+b841c8: b200c3e9     	mov	x9, #0x101010101010101  // =72340172838076673
+b841cc: f2e00009     	movk	x9, #0x0, lsl #48
+b841d0: 8a090100     	and	x0, x8, x9
+b841d4: d65f03c0     	ret
+
+0000000000b841d8 <_ZN12scale_parser16parseScalePacketEhPh>:
+b841d8: a9ba6ffc     	stp	x28, x27, [sp, #-0x60]!
+b841dc: a90167fa     	stp	x26, x25, [sp, #0x10]
+b841e0: a9025ff8     	stp	x24, x23, [sp, #0x20]
+b841e4: a90357f6     	stp	x22, x21, [sp, #0x30]
+b841e8: a9044ff4     	stp	x20, x19, [sp, #0x40]
+b841ec: a9057bfd     	stp	x29, x30, [sp, #0x50]
+b841f0: 910143fd     	add	x29, sp, #0x50
+b841f4: d10983ff     	sub	sp, sp, #0x260
+b841f8: d53bd056     	mrs	x22, TPIDR_EL0
+b841fc: aa0803f3     	mov	x19, x8
+b84200: f94016c8     	ldr	x8, [x22, #0x28]
+b84204: 72001c1f     	tst	w0, #0xff
+b84208: f90003e8     	str	x8, [sp]
+b8420c: a9007e7f     	stp	xzr, xzr, [x19]
+b84210: f9000a7f     	str	xzr, [x19, #0x10]
+b84214: 540002e0     	b.eq	0xb84270 <_ZN12scale_parser16parseScalePacketEhPh+0x98>
+b84218: 900032a8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b8421c: f946310a     	ldr	x10, [x8, #0xc60]
+b84220: aa0103f4     	mov	x20, x1
+b84224: 910103e8     	add	x8, sp, #0x40
+b84228: b40004aa     	cbz	x10, 0xb842bc <_ZN12scale_parser16parseScalePacketEhPh+0xe4>
+b8422c: 39400289     	ldrb	w9, [x20]
+b84230: 900032ac     	adrp	x12, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b84234: 9131818c     	add	x12, x12, #0xc60
+b84238: aa0c03eb     	mov	x11, x12
+b8423c: b9401d4d     	ldr	w13, [x10, #0x1c]
+b84240: 6b0901bf     	cmp	w13, w9
+b84244: 1a9fa7ed     	cset	w13, lt
+b84248: 9a8ab16b     	csel	x11, x11, x10, lt
+b8424c: f86d594a     	ldr	x10, [x10, w13, uxtw #3]
+b84250: b5ffff6a     	cbnz	x10, 0xb8423c <_ZN12scale_parser16parseScalePacketEhPh+0x64>
+b84254: eb0c017f     	cmp	x11, x12
+b84258: 32001ff7     	orr	w23, wzr, #0xff
+b8425c: 54000320     	b.eq	0xb842c0 <_ZN12scale_parser16parseScalePacketEhPh+0xe8>
+b84260: b9401d6a     	ldr	w10, [x11, #0x1c]
+b84264: 6b09015f     	cmp	w10, w9
+b84268: 1a8ac2f7     	csel	w23, w23, w10, gt
+b8426c: 14000015     	b	0xb842c0 <_ZN12scale_parser16parseScalePacketEhPh+0xe8>
+b84270: f80473ff     	stur	xzr, [sp, #0x47]
+b84274: f90023ff     	str	xzr, [sp, #0x40]
+b84278: f84473e8     	ldur	x8, [sp, #0x47]
+b8427c: aa1f03e9     	mov	x9, xzr
+b84280: 3900027f     	strb	wzr, [x19]
+b84284: a900fe68     	stp	x8, xzr, [x19, #0x8]
+b84288: f8001269     	stur	x9, [x19, #0x1]
+b8428c: f94016c8     	ldr	x8, [x22, #0x28]
+b84290: f94003e9     	ldr	x9, [sp]
+b84294: eb09011f     	cmp	x8, x9
+b84298: 54002721     	b.ne	0xb8477c <_ZN12scale_parser16parseScalePacketEhPh+0x5a4>
+b8429c: 910983ff     	add	sp, sp, #0x260
+b842a0: a9457bfd     	ldp	x29, x30, [sp, #0x50]
+b842a4: a9444ff4     	ldp	x20, x19, [sp, #0x40]
+b842a8: a94357f6     	ldp	x22, x21, [sp, #0x30]
+b842ac: a9425ff8     	ldp	x24, x23, [sp, #0x20]
+b842b0: a94167fa     	ldp	x26, x25, [sp, #0x10]
+b842b4: a8c66ffc     	ldp	x28, x27, [sp], #0x60
+b842b8: d65f03c0     	ret
+b842bc: 32001ff7     	orr	w23, wzr, #0xff
+b842c0: 900032b8     	adrp	x24, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+
+
+==================================================
+SYMBOL: _ZN12scale_parser14packetResponseEh (Address: 0x0000000000b83958)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b83958 <_ZN12scale_parser14packetResponseEh>:
+b83958: b00032a8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b8395c: f9463d09     	ldr	x9, [x8, #0xc78]
+b83960: b4000249     	cbz	x9, 0xb839a8 <_ZN12scale_parser14packetResponseEh+0x50>
+b83964: b00032ab     	adrp	x11, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b83968: 9131e16b     	add	x11, x11, #0xc78
+b8396c: 12001c0a     	and	w10, w0, #0xff
+b83970: aa0b03e8     	mov	x8, x11
+b83974: b9401d2c     	ldr	w12, [x9, #0x1c]
+b83978: 6b0a019f     	cmp	w12, w10
+b8397c: 1a9fa7ec     	cset	w12, lt
+b83980: 9a89b108     	csel	x8, x8, x9, lt
+b83984: f86c5929     	ldr	x9, [x9, w12, uxtw #3]
+b83988: b5ffff69     	cbnz	x9, 0xb83974 <_ZN12scale_parser14packetResponseEh+0x1c>
+b8398c: eb0b011f     	cmp	x8, x11
+b83990: 54000100     	b.eq	0xb839b0 <_ZN12scale_parser14packetResponseEh+0x58>
+b83994: b9401d09     	ldr	w9, [x8, #0x1c]
+b83998: 6b0a013f     	cmp	w9, w10
+b8399c: 540000ed     	b.le	0xb839b8 <_ZN12scale_parser14packetResponseEh+0x60>
+b839a0: 32001fe0     	orr	w0, wzr, #0xff
+b839a4: d65f03c0     	ret
+b839a8: 32001fe0     	orr	w0, wzr, #0xff
+b839ac: d65f03c0     	ret
+b839b0: 32001fe0     	orr	w0, wzr, #0xff
+b839b4: d65f03c0     	ret
+b839b8: b9402100     	ldr	w0, [x8, #0x20]
+b839bc: d65f03c0     	ret
+
+0000000000b839c0 <_ZN12scale_parser14parseRawWeightEhPh>:
+b839c0: 39400428     	ldrb	w8, [x1, #0x1]
+b839c4: 39400829     	ldrb	w9, [x1, #0x2]
+b839c8: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839cc: 33181d28     	bfi	w8, w9, #8, #8
+b839d0: 33103d48     	bfi	w8, w10, #16, #16
+b839d4: 13005d00     	sbfx	w0, w8, #0, #24
+b839d8: d65f03c0     	ret
+
+0000000000b839dc <_ZN12scale_parser16parseScaleWeightEhPh>:
+b839dc: 39400428     	ldrb	w8, [x1, #0x1]
+b839e0: 39400829     	ldrb	w9, [x1, #0x2]
+b839e4: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839e8: d0001c0b     	adrp	x11, 0xf05000 <_ZN5CRC325tableE+0x10d4>
+b839ec: bd44c160     	ldr	s0, [x11, #0x4c0]
+b839f0: 33181d28     	bfi	w8, w9, #8, #8
+b839f4: 33103d48     	bfi	w8, w10, #16, #16
+b839f8: 13005d08     	sbfx	w8, w8, #0, #24
+b839fc: 1e220101     	scvtf	s1, w8
+b83a00: 1e200820     	fmul	s0, s1, s0
+b83a04: d65f03c0     	ret
+
+0000000000b83a08 <_ZN12scale_parser15parseProtocolHWEhPh>:
+b83a08: d10503ff     	sub	sp, sp, #0x140
+b83a0c: a9105ffc     	stp	x28, x23, [sp, #0x100]
+b83a10: a91157f6     	stp	x22, x21, [sp, #0x110]
+b83a14: a9124ff4     	stp	x20, x19, [sp, #0x120]
+b83a18: a9137bfd     	stp	x29, x30, [sp, #0x130]
+b83a1c: 9104c3fd     	add	x29, sp, #0x130
+b83a20: d53bd054     	mrs	x20, TPIDR_EL0
+b83a24: aa0803f3     	mov	x19, x8
+b83a28: f9401688     	ldr	x8, [x20, #0x28]
+b83a2c: aa1303f5     	mov	x21, x19
+b83a30: 32001fe9     	orr	w9, wzr, #0xff
+b83a34: f81c83a8     	stur	x8, [x29, #-0x38]
+b83a38: f8020ebf     	str	xzr, [x21, #0x20]!
+b83a3c: a902fe7f     	stp	xzr, xzr, [x19, #0x28]
+b83a40: 39400428     	ldrb	w8, [x1, #0x1]
+b83a44: b9000268     	str	w8, [x19]
+b83a48: 39400828     	ldrb	w8, [x1, #0x2]
+b83a4c: b9000668     	str	w8, [x19, #0x4]
+b83a50: 39400c28     	ldrb	w8, [x1, #0x3]
+b83a54: b9000a68     	str	w8, [x19, #0x8]
+b83a58: 39401028     	ldrb	w8, [x1, #0x4]
+b83a5c: b9000e68     	str	w8, [x19, #0xc]
+b83a60: 39401428     	ldrb	w8, [x1, #0x5]
+b83a64: b9001268     	str	w8, [x19, #0x10]
+b83a68: 39401828     	ldrb	w8, [x1, #0x6]
+b83a6c: 2902a668     	stp	w8, w9, [x19, #0x14]
+b83a70: d0001de1     	adrp	x1, 0xf41000 <sm2_asn1_meth+0x15f90>
+b83a74: 910c8c21     	add	x1, x1, #0x323
+b83a78: 9100c3e0     	add	x0, sp, #0x30
+b83a7c: 97e2c429     	bl	0x434b20 <_ZN5boost12basic_formatIcNSt6__ndk111char_traitsIcEENS1_9allocatorIcEEEC2EPKc@plt>
+b83a80: 91003268     	add	x8, x19, #0xc
+b83a84: 90003156     	adrp	x22, 0x11ab000
+b83a88: f945c2d6     	ldr	x22, [x22, #0xb80]
+b83a8c: f9000fe8     	str	x8, [sp, #0x18]
+b83a90: b0003157     	adrp	x23, 0x11ac000
+b83a94: 3941b3e9     	ldrb	w9, [sp, #0x6c]
+b83a98: f946baf7     	ldr	x23, [x23, #0xd70]
+b83a9c: 9e6702c0     	fmov	d0, x22
+b83aa0: 4e181ee0     	mov	v0.d[1], x23
+b83aa4: 3c8203e0     	stur	q0, [sp, #0x20]
+b83aa8: 34000709     	cbz	w9, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83aac: a94323ec     	ldp	x12, x8, [sp, #0x30]
+b83ab0: eb0c011f     	cmp	x8, x12
+b83ab4: 54000420     	b.eq	0xb83b38 <_ZN12scale_parser15parseProtocolHWEhPh+0x130>
+b83ab8: b203ebea     	mov	x10, #-0x1111111111111112 // =-1229782938247303442
+b83abc: aa1f03e8     	mov	x8, xzr
+b83ac0: aa1f03e9     	mov	x9, xzr
+b83ac4: f29dddea     	movk	x10, #0xeeef
+b83ac8: 320003eb     	orr	w11, wzr, #0x1
+b83acc: f9402bed     	ldr	x13, [sp, #0x50]
+b83ad0: b400014d     	cbz	x13, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83ad4: b8a8698d     	ldrsw	x13, [x12, x8]
+b83ad8: 37f8010d     	tbnz	w13, #0x1f, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83adc: f94027ee     	ldr	x14, [sp, #0x48]
+b83ae0: d343fdaf     	lsr	x15, x13, #3
+b83ae4: 927de5ef     	and	x15, x15, #0x1ffffffffffffff8
+b83ae8: 9acd216d     	lsl	x13, x11, x13
+b83aec: f86f69ce     	ldr	x14, [x14, x15]
+b83af0: ea0d01df     	tst	x14, x13
+b83af4: 54000121     	b.ne	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83af8: 8b08018c     	add	x12, x12, x8
+b83afc: 3940218d     	ldrb	w13, [x12, #0x8]
+b83b00: 3700006d     	tbnz	w13, #0x0, 0xb83b0c <_ZN12scale_parser15parseProtocolHWEhPh+0x104>
+b83b04: 7900119f     	strh	wzr, [x12, #0x8]
+b83b08: 14000004     	b	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83b0c: f9400d8d     	ldr	x13, [x12, #0x18]
+b83b10: 390001bf     	strb	wzr, [x13]
+b83b14: f900099f     	str	xzr, [x12, #0x10]
+b83b18: a94337ec     	ldp	x12, x13, [sp, #0x30]
+b83b1c: 91000529     	add	x9, x9, #0x1
+b83b20: 9101e108     	add	x8, x8, #0x78
+b83b24: cb0c01ad     	sub	x13, x13, x12
+b83b28: 9343fdad     	asr	x13, x13, #3
+b83b2c: 9b0a7dad     	mul	x13, x13, x10
+b83b30: eb0d013f     	cmp	x9, x13
+b83b34: 54fffcc3     	b.lo	0xb83acc <_ZN12scale_parser15parseProtocolHWEhPh+0xc4>
+b83b38: f9402be8     	ldr	x8, [sp, #0x50]
+b83b3c: b90067ff     	str	wzr, [sp, #0x64]
+b83b40: 3901b3ff     	strb	wzr, [sp, #0x6c]
+b83b44: b4000228     	cbz	x8, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b48: b9806be8     	ldrsw	x8, [sp, #0x68]
+b83b4c: 7100051f     	cmp	w8, #0x1
+b83b50: 540001cb     	b.lt	0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b54: f94027ea     	ldr	x10, [sp, #0x48]
+b83b58: aa1f03e9     	mov	x9, xzr
+b83b5c: 320003eb     	orr	w11, wzr, #0x1
+b83b60: d343fd2c     	lsr	x12, x9, #3
+b83b64: 927de58c     	and	x12, x12, #0x1ffffffffffffff8
+b83b68: f86c694c     	ldr	x12, [x10, x12]
+b83b6c: 9ac9216d     	lsl	x13, x11, x9
+b83b70: ea0c01bf     	tst	x13, x12
+b83b74: 540000a0     	b.eq	0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b78: 91000529     	add	x9, x9, #0x1
+b83b7c: eb08013f     	cmp	x9, x8
+
+
+==================================================
+SYMBOL: _ZN12scale_parser14parseRawWeightEhPh (Address: 0x0000000000b839c0)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b839c0 <_ZN12scale_parser14parseRawWeightEhPh>:
+b839c0: 39400428     	ldrb	w8, [x1, #0x1]
+b839c4: 39400829     	ldrb	w9, [x1, #0x2]
+b839c8: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839cc: 33181d28     	bfi	w8, w9, #8, #8
+b839d0: 33103d48     	bfi	w8, w10, #16, #16
+b839d4: 13005d00     	sbfx	w0, w8, #0, #24
+b839d8: d65f03c0     	ret
+
+0000000000b839dc <_ZN12scale_parser16parseScaleWeightEhPh>:
+b839dc: 39400428     	ldrb	w8, [x1, #0x1]
+b839e0: 39400829     	ldrb	w9, [x1, #0x2]
+b839e4: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839e8: d0001c0b     	adrp	x11, 0xf05000 <_ZN5CRC325tableE+0x10d4>
+b839ec: bd44c160     	ldr	s0, [x11, #0x4c0]
+b839f0: 33181d28     	bfi	w8, w9, #8, #8
+b839f4: 33103d48     	bfi	w8, w10, #16, #16
+b839f8: 13005d08     	sbfx	w8, w8, #0, #24
+b839fc: 1e220101     	scvtf	s1, w8
+b83a00: 1e200820     	fmul	s0, s1, s0
+b83a04: d65f03c0     	ret
+
+0000000000b83a08 <_ZN12scale_parser15parseProtocolHWEhPh>:
+b83a08: d10503ff     	sub	sp, sp, #0x140
+b83a0c: a9105ffc     	stp	x28, x23, [sp, #0x100]
+b83a10: a91157f6     	stp	x22, x21, [sp, #0x110]
+b83a14: a9124ff4     	stp	x20, x19, [sp, #0x120]
+b83a18: a9137bfd     	stp	x29, x30, [sp, #0x130]
+b83a1c: 9104c3fd     	add	x29, sp, #0x130
+b83a20: d53bd054     	mrs	x20, TPIDR_EL0
+b83a24: aa0803f3     	mov	x19, x8
+b83a28: f9401688     	ldr	x8, [x20, #0x28]
+b83a2c: aa1303f5     	mov	x21, x19
+b83a30: 32001fe9     	orr	w9, wzr, #0xff
+b83a34: f81c83a8     	stur	x8, [x29, #-0x38]
+b83a38: f8020ebf     	str	xzr, [x21, #0x20]!
+b83a3c: a902fe7f     	stp	xzr, xzr, [x19, #0x28]
+b83a40: 39400428     	ldrb	w8, [x1, #0x1]
+b83a44: b9000268     	str	w8, [x19]
+b83a48: 39400828     	ldrb	w8, [x1, #0x2]
+b83a4c: b9000668     	str	w8, [x19, #0x4]
+b83a50: 39400c28     	ldrb	w8, [x1, #0x3]
+b83a54: b9000a68     	str	w8, [x19, #0x8]
+b83a58: 39401028     	ldrb	w8, [x1, #0x4]
+b83a5c: b9000e68     	str	w8, [x19, #0xc]
+b83a60: 39401428     	ldrb	w8, [x1, #0x5]
+b83a64: b9001268     	str	w8, [x19, #0x10]
+b83a68: 39401828     	ldrb	w8, [x1, #0x6]
+b83a6c: 2902a668     	stp	w8, w9, [x19, #0x14]
+b83a70: d0001de1     	adrp	x1, 0xf41000 <sm2_asn1_meth+0x15f90>
+b83a74: 910c8c21     	add	x1, x1, #0x323
+b83a78: 9100c3e0     	add	x0, sp, #0x30
+b83a7c: 97e2c429     	bl	0x434b20 <_ZN5boost12basic_formatIcNSt6__ndk111char_traitsIcEENS1_9allocatorIcEEEC2EPKc@plt>
+b83a80: 91003268     	add	x8, x19, #0xc
+b83a84: 90003156     	adrp	x22, 0x11ab000
+b83a88: f945c2d6     	ldr	x22, [x22, #0xb80]
+b83a8c: f9000fe8     	str	x8, [sp, #0x18]
+b83a90: b0003157     	adrp	x23, 0x11ac000
+b83a94: 3941b3e9     	ldrb	w9, [sp, #0x6c]
+b83a98: f946baf7     	ldr	x23, [x23, #0xd70]
+b83a9c: 9e6702c0     	fmov	d0, x22
+b83aa0: 4e181ee0     	mov	v0.d[1], x23
+b83aa4: 3c8203e0     	stur	q0, [sp, #0x20]
+b83aa8: 34000709     	cbz	w9, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83aac: a94323ec     	ldp	x12, x8, [sp, #0x30]
+b83ab0: eb0c011f     	cmp	x8, x12
+b83ab4: 54000420     	b.eq	0xb83b38 <_ZN12scale_parser15parseProtocolHWEhPh+0x130>
+b83ab8: b203ebea     	mov	x10, #-0x1111111111111112 // =-1229782938247303442
+b83abc: aa1f03e8     	mov	x8, xzr
+b83ac0: aa1f03e9     	mov	x9, xzr
+b83ac4: f29dddea     	movk	x10, #0xeeef
+b83ac8: 320003eb     	orr	w11, wzr, #0x1
+b83acc: f9402bed     	ldr	x13, [sp, #0x50]
+b83ad0: b400014d     	cbz	x13, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83ad4: b8a8698d     	ldrsw	x13, [x12, x8]
+b83ad8: 37f8010d     	tbnz	w13, #0x1f, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83adc: f94027ee     	ldr	x14, [sp, #0x48]
+b83ae0: d343fdaf     	lsr	x15, x13, #3
+b83ae4: 927de5ef     	and	x15, x15, #0x1ffffffffffffff8
+b83ae8: 9acd216d     	lsl	x13, x11, x13
+b83aec: f86f69ce     	ldr	x14, [x14, x15]
+b83af0: ea0d01df     	tst	x14, x13
+b83af4: 54000121     	b.ne	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83af8: 8b08018c     	add	x12, x12, x8
+b83afc: 3940218d     	ldrb	w13, [x12, #0x8]
+b83b00: 3700006d     	tbnz	w13, #0x0, 0xb83b0c <_ZN12scale_parser15parseProtocolHWEhPh+0x104>
+b83b04: 7900119f     	strh	wzr, [x12, #0x8]
+b83b08: 14000004     	b	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83b0c: f9400d8d     	ldr	x13, [x12, #0x18]
+b83b10: 390001bf     	strb	wzr, [x13]
+b83b14: f900099f     	str	xzr, [x12, #0x10]
+b83b18: a94337ec     	ldp	x12, x13, [sp, #0x30]
+b83b1c: 91000529     	add	x9, x9, #0x1
+b83b20: 9101e108     	add	x8, x8, #0x78
+b83b24: cb0c01ad     	sub	x13, x13, x12
+b83b28: 9343fdad     	asr	x13, x13, #3
+b83b2c: 9b0a7dad     	mul	x13, x13, x10
+b83b30: eb0d013f     	cmp	x9, x13
+b83b34: 54fffcc3     	b.lo	0xb83acc <_ZN12scale_parser15parseProtocolHWEhPh+0xc4>
+b83b38: f9402be8     	ldr	x8, [sp, #0x50]
+b83b3c: b90067ff     	str	wzr, [sp, #0x64]
+b83b40: 3901b3ff     	strb	wzr, [sp, #0x6c]
+b83b44: b4000228     	cbz	x8, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b48: b9806be8     	ldrsw	x8, [sp, #0x68]
+b83b4c: 7100051f     	cmp	w8, #0x1
+b83b50: 540001cb     	b.lt	0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b54: f94027ea     	ldr	x10, [sp, #0x48]
+b83b58: aa1f03e9     	mov	x9, xzr
+b83b5c: 320003eb     	orr	w11, wzr, #0x1
+b83b60: d343fd2c     	lsr	x12, x9, #3
+b83b64: 927de58c     	and	x12, x12, #0x1ffffffffffffff8
+b83b68: f86c694c     	ldr	x12, [x10, x12]
+b83b6c: 9ac9216d     	lsl	x13, x11, x9
+b83b70: ea0c01bf     	tst	x13, x12
+b83b74: 540000a0     	b.eq	0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b78: 91000529     	add	x9, x9, #0x1
+b83b7c: eb08013f     	cmp	x9, x8
+b83b80: b90067e9     	str	w9, [sp, #0x64]
+b83b84: 54fffeeb     	b.lt	0xb83b60 <_ZN12scale_parser15parseProtocolHWEhPh+0x158>
+b83b88: 9100c3e0     	add	x0, sp, #0x30
+b83b8c: 910063e1     	add	x1, sp, #0x18
+b83b90: 97e2d470     	bl	0x438d50 <_ZN5boost2io6detail10distributeIcNSt6__ndk111char_traitsIcEENS3_9allocatorIcEERKNS1_10put_holderIcS5_EEEEvRNS_12basic_formatIT_T0_T1_EET2_@plt>
+b83b94: b98067ed     	ldrsw	x13, [sp, #0x64]
+b83b98: f9402be8     	ldr	x8, [sp, #0x50]
+b83b9c: 91004269     	add	x9, x19, #0x10
+b83ba0: 910005aa     	add	x10, x13, #0x1
+b83ba4: b90067ea     	str	w10, [sp, #0x64]
+b83ba8: b4000248     	cbz	x8, 0xb83bf0 <_ZN12scale_parser15parseProtocolHWEhPh+0x1e8>
+b83bac: b9806beb     	ldrsw	x11, [sp, #0x68]
+b83bb0: 6b0b015f     	cmp	w10, w11
+b83bb4: 540001ea     	b.ge	0xb83bf0 <_ZN12scale_parser15parseProtocolHWEhPh+0x1e8>
+b83bb8: f94027ec     	ldr	x12, [sp, #0x48]
+b83bbc: 110009ad     	add	w13, w13, #0x2
+b83bc0: 320003ee     	orr	w14, wzr, #0x1
+b83bc4: d343fd4f     	lsr	x15, x10, #3
+b83bc8: 927de5ef     	and	x15, x15, #0x1ffffffffffffff8
+b83bcc: f86f698f     	ldr	x15, [x12, x15]
+b83bd0: 9aca21d0     	lsl	x16, x14, x10
+b83bd4: ea0f021f     	tst	x16, x15
+b83bd8: 540000c0     	b.eq	0xb83bf0 <_ZN12scale_parser15parseProtocolHWEhPh+0x1e8>
+b83bdc: 9100054a     	add	x10, x10, #0x1
+b83be0: b90067ed     	str	w13, [sp, #0x64]
+b83be4: eb0b015f     	cmp	x10, x11
+b83be8: 110005ad     	add	w13, w13, #0x1
+b83bec: 54fffecb     	b.lt	0xb83bc4 <_ZN12scale_parser15parseProtocolHWEhPh+0x1bc>
+
+
+==================================================
+SYMBOL: _ZN12scale_parser16parseScalePacketEhPh (Address: 0x0000000000b841d8)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b841d8 <_ZN12scale_parser16parseScalePacketEhPh>:
+b841d8: a9ba6ffc     	stp	x28, x27, [sp, #-0x60]!
+b841dc: a90167fa     	stp	x26, x25, [sp, #0x10]
+b841e0: a9025ff8     	stp	x24, x23, [sp, #0x20]
+b841e4: a90357f6     	stp	x22, x21, [sp, #0x30]
+b841e8: a9044ff4     	stp	x20, x19, [sp, #0x40]
+b841ec: a9057bfd     	stp	x29, x30, [sp, #0x50]
+b841f0: 910143fd     	add	x29, sp, #0x50
+b841f4: d10983ff     	sub	sp, sp, #0x260
+b841f8: d53bd056     	mrs	x22, TPIDR_EL0
+b841fc: aa0803f3     	mov	x19, x8
+b84200: f94016c8     	ldr	x8, [x22, #0x28]
+b84204: 72001c1f     	tst	w0, #0xff
+b84208: f90003e8     	str	x8, [sp]
+b8420c: a9007e7f     	stp	xzr, xzr, [x19]
+b84210: f9000a7f     	str	xzr, [x19, #0x10]
+b84214: 540002e0     	b.eq	0xb84270 <_ZN12scale_parser16parseScalePacketEhPh+0x98>
+b84218: 900032a8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b8421c: f946310a     	ldr	x10, [x8, #0xc60]
+b84220: aa0103f4     	mov	x20, x1
+b84224: 910103e8     	add	x8, sp, #0x40
+b84228: b40004aa     	cbz	x10, 0xb842bc <_ZN12scale_parser16parseScalePacketEhPh+0xe4>
+b8422c: 39400289     	ldrb	w9, [x20]
+b84230: 900032ac     	adrp	x12, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b84234: 9131818c     	add	x12, x12, #0xc60
+b84238: aa0c03eb     	mov	x11, x12
+b8423c: b9401d4d     	ldr	w13, [x10, #0x1c]
+b84240: 6b0901bf     	cmp	w13, w9
+b84244: 1a9fa7ed     	cset	w13, lt
+b84248: 9a8ab16b     	csel	x11, x11, x10, lt
+b8424c: f86d594a     	ldr	x10, [x10, w13, uxtw #3]
+b84250: b5ffff6a     	cbnz	x10, 0xb8423c <_ZN12scale_parser16parseScalePacketEhPh+0x64>
+b84254: eb0c017f     	cmp	x11, x12
+b84258: 32001ff7     	orr	w23, wzr, #0xff
+b8425c: 54000320     	b.eq	0xb842c0 <_ZN12scale_parser16parseScalePacketEhPh+0xe8>
+b84260: b9401d6a     	ldr	w10, [x11, #0x1c]
+b84264: 6b09015f     	cmp	w10, w9
+b84268: 1a8ac2f7     	csel	w23, w23, w10, gt
+b8426c: 14000015     	b	0xb842c0 <_ZN12scale_parser16parseScalePacketEhPh+0xe8>
+b84270: f80473ff     	stur	xzr, [sp, #0x47]
+b84274: f90023ff     	str	xzr, [sp, #0x40]
+b84278: f84473e8     	ldur	x8, [sp, #0x47]
+b8427c: aa1f03e9     	mov	x9, xzr
+b84280: 3900027f     	strb	wzr, [x19]
+b84284: a900fe68     	stp	x8, xzr, [x19, #0x8]
+b84288: f8001269     	stur	x9, [x19, #0x1]
+b8428c: f94016c8     	ldr	x8, [x22, #0x28]
+b84290: f94003e9     	ldr	x9, [sp]
+b84294: eb09011f     	cmp	x8, x9
+b84298: 54002721     	b.ne	0xb8477c <_ZN12scale_parser16parseScalePacketEhPh+0x5a4>
+b8429c: 910983ff     	add	sp, sp, #0x260
+b842a0: a9457bfd     	ldp	x29, x30, [sp, #0x50]
+b842a4: a9444ff4     	ldp	x20, x19, [sp, #0x40]
+b842a8: a94357f6     	ldp	x22, x21, [sp, #0x30]
+b842ac: a9425ff8     	ldp	x24, x23, [sp, #0x20]
+b842b0: a94167fa     	ldp	x26, x25, [sp, #0x10]
+b842b4: a8c66ffc     	ldp	x28, x27, [sp], #0x60
+b842b8: d65f03c0     	ret
+b842bc: 32001ff7     	orr	w23, wzr, #0xff
+b842c0: 900032b8     	adrp	x24, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b842c4: 91324318     	add	x24, x24, #0xc90
+b842c8: f940031b     	ldr	x27, [x24]
+b842cc: 6f00e400     	movi	v0.2d, #0000000000000000
+b842d0: 12001efa     	and	w26, w23, #0xff
+b842d4: ad0f0100     	stp	q0, q0, [x8, #0x1e0]
+b842d8: ad0e0100     	stp	q0, q0, [x8, #0x1c0]
+b842dc: ad0d0100     	stp	q0, q0, [x8, #0x1a0]
+b842e0: ad0c0100     	stp	q0, q0, [x8, #0x180]
+b842e4: ad0b0100     	stp	q0, q0, [x8, #0x160]
+b842e8: ad0a0100     	stp	q0, q0, [x8, #0x140]
+b842ec: ad090100     	stp	q0, q0, [x8, #0x120]
+b842f0: ad080100     	stp	q0, q0, [x8, #0x100]
+b842f4: ad070100     	stp	q0, q0, [x8, #0xe0]
+b842f8: ad060100     	stp	q0, q0, [x8, #0xc0]
+b842fc: ad050100     	stp	q0, q0, [x8, #0xa0]
+b84300: ad040100     	stp	q0, q0, [x8, #0x80]
+b84304: ad030100     	stp	q0, q0, [x8, #0x60]
+b84308: 3d801500     	str	q0, [x8, #0x50]
+b8430c: ad0383e0     	stp	q0, q0, [sp, #0x70]
+b84310: ad0283e0     	stp	q0, q0, [sp, #0x50]
+b84314: 3d8013e0     	str	q0, [sp, #0x40]
+b84318: b400033b     	cbz	x27, 0xb8437c <_ZN12scale_parser16parseScalePacketEhPh+0x1a4>
+b8431c: 900032b9     	adrp	x25, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b84320: 91324339     	add	x25, x25, #0xc90
+b84324: b9402368     	ldr	w8, [x27, #0x20]
+b84328: 6b08035f     	cmp	w26, w8
+b8432c: 5400014a     	b.ge	0xb84354 <_ZN12scale_parser16parseScalePacketEhPh+0x17c>
+b84330: 14000006     	b	0xb84348 <_ZN12scale_parser16parseScalePacketEhPh+0x170>
+b84334: aa1b03f9     	mov	x25, x27
+b84338: aa0803fb     	mov	x27, x8
+b8433c: b9402368     	ldr	w8, [x27, #0x20]
+b84340: 6b08035f     	cmp	w26, w8
+b84344: 5400008a     	b.ge	0xb84354 <_ZN12scale_parser16parseScalePacketEhPh+0x17c>
+b84348: f9400368     	ldr	x8, [x27]
+b8434c: b5ffff48     	cbnz	x8, 0xb84334 <_ZN12scale_parser16parseScalePacketEhPh+0x15c>
+b84350: 1400001f     	b	0xb843cc <_ZN12scale_parser16parseScalePacketEhPh+0x1f4>
+b84354: 6b1a011f     	cmp	w8, w26
+b84358: 5400016a     	b.ge	0xb84384 <_ZN12scale_parser16parseScalePacketEhPh+0x1ac>
+b8435c: aa1b03f9     	mov	x25, x27
+b84360: f8408f28     	ldr	x8, [x25, #0x8]!
+b84364: b4000108     	cbz	x8, 0xb84384 <_ZN12scale_parser16parseScalePacketEhPh+0x1ac>
+b84368: aa0803fb     	mov	x27, x8
+b8436c: b9402368     	ldr	w8, [x27, #0x20]
+b84370: 6b08035f     	cmp	w26, w8
+b84374: 54ffff0a     	b.ge	0xb84354 <_ZN12scale_parser16parseScalePacketEhPh+0x17c>
+b84378: 17fffff4     	b	0xb84348 <_ZN12scale_parser16parseScalePacketEhPh+0x170>
+b8437c: aa1803fb     	mov	x27, x24
+b84380: aa1803f9     	mov	x25, x24
+b84384: f9400335     	ldr	x21, [x25]
+b84388: b5000375     	cbnz	x21, 0xb843f4 <_ZN12scale_parser16parseScalePacketEhPh+0x21c>
+b8438c: 321a03e0     	orr	w0, wzr, #0x40
+b84390: 97e2b488     	bl	0x4315b0 <_Znwm@plt>
+b84394: b900201a     	str	w26, [x0, #0x20]
+b84398: a9037c1f     	stp	xzr, xzr, [x0, #0x30]
+b8439c: f900141f     	str	xzr, [x0, #0x28]
+b843a0: a9007c1f     	stp	xzr, xzr, [x0]
+b843a4: f900081b     	str	x27, [x0, #0x10]
+b843a8: f9000320     	str	x0, [x25]
+b843ac: 900032a8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b843b0: f9464509     	ldr	x9, [x8, #0xc88]
+b843b4: aa0003f5     	mov	x21, x0
+b843b8: f9400129     	ldr	x9, [x9]
+b843bc: b4000109     	cbz	x9, 0xb843dc <_ZN12scale_parser16parseScalePacketEhPh+0x204>
+b843c0: f9064509     	str	x9, [x8, #0xc88]
+b843c4: f9400321     	ldr	x1, [x25]
+b843c8: 14000006     	b	0xb843e0 <_ZN12scale_parser16parseScalePacketEhPh+0x208>
+b843cc: aa1b03f9     	mov	x25, x27
+b843d0: f9400335     	ldr	x21, [x25]
+b843d4: b5000115     	cbnz	x21, 0xb843f4 <_ZN12scale_parser16parseScalePacketEhPh+0x21c>
+b843d8: 17ffffed     	b	0xb8438c <_ZN12scale_parser16parseScalePacketEhPh+0x1b4>
+b843dc: aa1503e1     	mov	x1, x21
+b843e0: f9400300     	ldr	x0, [x24]
+b843e4: 97ea8bee     	bl	0x62739c <_ZNSt6__ndk16__treeINS_12__value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEN6Action17advance_trigger_tEEENS_19__map_value_compareIS7_SA_NS_4lessIS7_EELb1EEENS5_ISA_EEE7destroyEPNS_11__tree_nodeISA_PvEE+0xd0>
+b843e8: f9400708     	ldr	x8, [x24, #0x8]
+b843ec: 91000508     	add	x8, x8, #0x1
+b843f0: f9000708     	str	x8, [x24, #0x8]
+b843f4: 3940a2a8     	ldrb	w8, [x21, #0x28]
+b843f8: a9432aa9     	ldp	x9, x10, [x21, #0x30]
+b843fc: 9100a6ab     	add	x11, x21, #0x29
+b84400: 7200011f     	tst	w8, #0x1
+b84404: d341fd0c     	lsr	x12, x8, #1
+b84408: 9a8a0161     	csel	x1, x11, x10, eq
+b8440c: 9a890182     	csel	x2, x12, x9, eq
+b84410: aa1303e0     	mov	x0, x19
+b84414: 97ebf829     	bl	0x6824b8 <_ZNSt6__ndk16__treeIPN4YAML6detail4nodeENS_4lessIS4_EENS_9allocatorIS4_EEE7destroyEPNS_11__tree_nodeIS4_PvEE+0x148>
+
+
+==================================================
+SYMBOL: _ZN12scale_parser16parseScaleWeightEhPh (Address: 0x0000000000b839dc)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b839dc <_ZN12scale_parser16parseScaleWeightEhPh>:
+b839dc: 39400428     	ldrb	w8, [x1, #0x1]
+b839e0: 39400829     	ldrb	w9, [x1, #0x2]
+b839e4: 39400c2a     	ldrb	w10, [x1, #0x3]
+b839e8: d0001c0b     	adrp	x11, 0xf05000 <_ZN5CRC325tableE+0x10d4>
+b839ec: bd44c160     	ldr	s0, [x11, #0x4c0]
+b839f0: 33181d28     	bfi	w8, w9, #8, #8
+b839f4: 33103d48     	bfi	w8, w10, #16, #16
+b839f8: 13005d08     	sbfx	w8, w8, #0, #24
+b839fc: 1e220101     	scvtf	s1, w8
+b83a00: 1e200820     	fmul	s0, s1, s0
+b83a04: d65f03c0     	ret
+
+0000000000b83a08 <_ZN12scale_parser15parseProtocolHWEhPh>:
+b83a08: d10503ff     	sub	sp, sp, #0x140
+b83a0c: a9105ffc     	stp	x28, x23, [sp, #0x100]
+b83a10: a91157f6     	stp	x22, x21, [sp, #0x110]
+b83a14: a9124ff4     	stp	x20, x19, [sp, #0x120]
+b83a18: a9137bfd     	stp	x29, x30, [sp, #0x130]
+b83a1c: 9104c3fd     	add	x29, sp, #0x130
+b83a20: d53bd054     	mrs	x20, TPIDR_EL0
+b83a24: aa0803f3     	mov	x19, x8
+b83a28: f9401688     	ldr	x8, [x20, #0x28]
+b83a2c: aa1303f5     	mov	x21, x19
+b83a30: 32001fe9     	orr	w9, wzr, #0xff
+b83a34: f81c83a8     	stur	x8, [x29, #-0x38]
+b83a38: f8020ebf     	str	xzr, [x21, #0x20]!
+b83a3c: a902fe7f     	stp	xzr, xzr, [x19, #0x28]
+b83a40: 39400428     	ldrb	w8, [x1, #0x1]
+b83a44: b9000268     	str	w8, [x19]
+b83a48: 39400828     	ldrb	w8, [x1, #0x2]
+b83a4c: b9000668     	str	w8, [x19, #0x4]
+b83a50: 39400c28     	ldrb	w8, [x1, #0x3]
+b83a54: b9000a68     	str	w8, [x19, #0x8]
+b83a58: 39401028     	ldrb	w8, [x1, #0x4]
+b83a5c: b9000e68     	str	w8, [x19, #0xc]
+b83a60: 39401428     	ldrb	w8, [x1, #0x5]
+b83a64: b9001268     	str	w8, [x19, #0x10]
+b83a68: 39401828     	ldrb	w8, [x1, #0x6]
+b83a6c: 2902a668     	stp	w8, w9, [x19, #0x14]
+b83a70: d0001de1     	adrp	x1, 0xf41000 <sm2_asn1_meth+0x15f90>
+b83a74: 910c8c21     	add	x1, x1, #0x323
+b83a78: 9100c3e0     	add	x0, sp, #0x30
+b83a7c: 97e2c429     	bl	0x434b20 <_ZN5boost12basic_formatIcNSt6__ndk111char_traitsIcEENS1_9allocatorIcEEEC2EPKc@plt>
+b83a80: 91003268     	add	x8, x19, #0xc
+b83a84: 90003156     	adrp	x22, 0x11ab000
+b83a88: f945c2d6     	ldr	x22, [x22, #0xb80]
+b83a8c: f9000fe8     	str	x8, [sp, #0x18]
+b83a90: b0003157     	adrp	x23, 0x11ac000
+b83a94: 3941b3e9     	ldrb	w9, [sp, #0x6c]
+b83a98: f946baf7     	ldr	x23, [x23, #0xd70]
+b83a9c: 9e6702c0     	fmov	d0, x22
+b83aa0: 4e181ee0     	mov	v0.d[1], x23
+b83aa4: 3c8203e0     	stur	q0, [sp, #0x20]
+b83aa8: 34000709     	cbz	w9, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83aac: a94323ec     	ldp	x12, x8, [sp, #0x30]
+b83ab0: eb0c011f     	cmp	x8, x12
+b83ab4: 54000420     	b.eq	0xb83b38 <_ZN12scale_parser15parseProtocolHWEhPh+0x130>
+b83ab8: b203ebea     	mov	x10, #-0x1111111111111112 // =-1229782938247303442
+b83abc: aa1f03e8     	mov	x8, xzr
+b83ac0: aa1f03e9     	mov	x9, xzr
+b83ac4: f29dddea     	movk	x10, #0xeeef
+b83ac8: 320003eb     	orr	w11, wzr, #0x1
+b83acc: f9402bed     	ldr	x13, [sp, #0x50]
+b83ad0: b400014d     	cbz	x13, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83ad4: b8a8698d     	ldrsw	x13, [x12, x8]
+b83ad8: 37f8010d     	tbnz	w13, #0x1f, 0xb83af8 <_ZN12scale_parser15parseProtocolHWEhPh+0xf0>
+b83adc: f94027ee     	ldr	x14, [sp, #0x48]
+b83ae0: d343fdaf     	lsr	x15, x13, #3
+b83ae4: 927de5ef     	and	x15, x15, #0x1ffffffffffffff8
+b83ae8: 9acd216d     	lsl	x13, x11, x13
+b83aec: f86f69ce     	ldr	x14, [x14, x15]
+b83af0: ea0d01df     	tst	x14, x13
+b83af4: 54000121     	b.ne	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83af8: 8b08018c     	add	x12, x12, x8
+b83afc: 3940218d     	ldrb	w13, [x12, #0x8]
+b83b00: 3700006d     	tbnz	w13, #0x0, 0xb83b0c <_ZN12scale_parser15parseProtocolHWEhPh+0x104>
+b83b04: 7900119f     	strh	wzr, [x12, #0x8]
+b83b08: 14000004     	b	0xb83b18 <_ZN12scale_parser15parseProtocolHWEhPh+0x110>
+b83b0c: f9400d8d     	ldr	x13, [x12, #0x18]
+b83b10: 390001bf     	strb	wzr, [x13]
+b83b14: f900099f     	str	xzr, [x12, #0x10]
+b83b18: a94337ec     	ldp	x12, x13, [sp, #0x30]
+b83b1c: 91000529     	add	x9, x9, #0x1
+b83b20: 9101e108     	add	x8, x8, #0x78
+b83b24: cb0c01ad     	sub	x13, x13, x12
+b83b28: 9343fdad     	asr	x13, x13, #3
+b83b2c: 9b0a7dad     	mul	x13, x13, x10
+b83b30: eb0d013f     	cmp	x9, x13
+b83b34: 54fffcc3     	b.lo	0xb83acc <_ZN12scale_parser15parseProtocolHWEhPh+0xc4>
+b83b38: f9402be8     	ldr	x8, [sp, #0x50]
+b83b3c: b90067ff     	str	wzr, [sp, #0x64]
+b83b40: 3901b3ff     	strb	wzr, [sp, #0x6c]
+b83b44: b4000228     	cbz	x8, 0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b48: b9806be8     	ldrsw	x8, [sp, #0x68]
+b83b4c: 7100051f     	cmp	w8, #0x1
+b83b50: 540001cb     	b.lt	0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b54: f94027ea     	ldr	x10, [sp, #0x48]
+b83b58: aa1f03e9     	mov	x9, xzr
+b83b5c: 320003eb     	orr	w11, wzr, #0x1
+b83b60: d343fd2c     	lsr	x12, x9, #3
+b83b64: 927de58c     	and	x12, x12, #0x1ffffffffffffff8
+b83b68: f86c694c     	ldr	x12, [x10, x12]
+b83b6c: 9ac9216d     	lsl	x13, x11, x9
+b83b70: ea0c01bf     	tst	x13, x12
+b83b74: 540000a0     	b.eq	0xb83b88 <_ZN12scale_parser15parseProtocolHWEhPh+0x180>
+b83b78: 91000529     	add	x9, x9, #0x1
+b83b7c: eb08013f     	cmp	x9, x8
+b83b80: b90067e9     	str	w9, [sp, #0x64]
+b83b84: 54fffeeb     	b.lt	0xb83b60 <_ZN12scale_parser15parseProtocolHWEhPh+0x158>
+b83b88: 9100c3e0     	add	x0, sp, #0x30
+b83b8c: 910063e1     	add	x1, sp, #0x18
+b83b90: 97e2d470     	bl	0x438d50 <_ZN5boost2io6detail10distributeIcNSt6__ndk111char_traitsIcEENS3_9allocatorIcEERKNS1_10put_holderIcS5_EEEEvRNS_12basic_formatIT_T0_T1_EET2_@plt>
+b83b94: b98067ed     	ldrsw	x13, [sp, #0x64]
+b83b98: f9402be8     	ldr	x8, [sp, #0x50]
+b83b9c: 91004269     	add	x9, x19, #0x10
+b83ba0: 910005aa     	add	x10, x13, #0x1
+b83ba4: b90067ea     	str	w10, [sp, #0x64]
+b83ba8: b4000248     	cbz	x8, 0xb83bf0 <_ZN12scale_parser15parseProtocolHWEhPh+0x1e8>
+b83bac: b9806beb     	ldrsw	x11, [sp, #0x68]
+b83bb0: 6b0b015f     	cmp	w10, w11
+b83bb4: 540001ea     	b.ge	0xb83bf0 <_ZN12scale_parser15parseProtocolHWEhPh+0x1e8>
+b83bb8: f94027ec     	ldr	x12, [sp, #0x48]
+b83bbc: 110009ad     	add	w13, w13, #0x2
+b83bc0: 320003ee     	orr	w14, wzr, #0x1
+b83bc4: d343fd4f     	lsr	x15, x10, #3
+b83bc8: 927de5ef     	and	x15, x15, #0x1ffffffffffffff8
+b83bcc: f86f698f     	ldr	x15, [x12, x15]
+b83bd0: 9aca21d0     	lsl	x16, x14, x10
+b83bd4: ea0f021f     	tst	x16, x15
+b83bd8: 540000c0     	b.eq	0xb83bf0 <_ZN12scale_parser15parseProtocolHWEhPh+0x1e8>
+b83bdc: 9100054a     	add	x10, x10, #0x1
+b83be0: b90067ed     	str	w13, [sp, #0x64]
+b83be4: eb0b015f     	cmp	x10, x11
+b83be8: 110005ad     	add	w13, w13, #0x1
+b83bec: 54fffecb     	b.lt	0xb83bc4 <_ZN12scale_parser15parseProtocolHWEhPh+0x1bc>
+b83bf0: 3941b3ea     	ldrb	w10, [sp, #0x6c]
+b83bf4: 9e6702c0     	fmov	d0, x22
+b83bf8: 4e181ee0     	mov	v0.d[1], x23
+b83bfc: f9000fe9     	str	x9, [sp, #0x18]
+b83c00: 3c8203e0     	stur	q0, [sp, #0x20]
+b83c04: 340006ea     	cbz	w10, 0xb83ce0 <_ZN12scale_parser15parseProtocolHWEhPh+0x2d8>
+b83c08: a94327ed     	ldp	x13, x9, [sp, #0x30]
+b83c0c: eb0d013f     	cmp	x9, x13
+b83c10: 54000420     	b.eq	0xb83c94 <_ZN12scale_parser15parseProtocolHWEhPh+0x28c>
+
+
+==================================================
+SYMBOL: _ZN14BluetoothScale12updateWeightEf (Address: 0x0000000000b9c6cc)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b9c6cc <_ZN14BluetoothScale12updateWeightEf>:
+b9c6cc: fc1d0fe8     	str	d8, [sp, #-0x30]!
+b9c6d0: f90007f5     	str	x21, [sp, #0x8]
+b9c6d4: a9014ff4     	stp	x20, x19, [sp, #0x10]
+b9c6d8: a9027bfd     	stp	x29, x30, [sp, #0x20]
+b9c6dc: 910083fd     	add	x29, sp, #0x20
+b9c6e0: 900031e8     	adrp	x8, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b9c6e4: 91386108     	add	x8, x8, #0xe18
+b9c6e8: 08dffd08     	ldarb	w8, [x8]
+b9c6ec: 4ea01c08     	mov	v8.16b, v0.16b
+b9c6f0: aa0003f3     	mov	x19, x0
+b9c6f4: 360006a8     	tbz	w8, #0x0, 0xb9c7c8 <_ZN14BluetoothScale12updateWeightEf+0xfc>
+b9c6f8: bd091268     	str	s8, [x19, #0x910]
+b9c6fc: 97e292a1     	bl	0x441180 <_ZNSt6__ndk16chrono12steady_clock3nowEv@plt>
+b9c700: 9128e260     	add	x0, x19, #0xa38
+b9c704: 4ea81d00     	mov	v0.16b, v8.16b
+b9c708: 97e2a076     	bl	0x4448e0 <_ZN12medianFilterIfLi5EEclEf@plt>
+b9c70c: 3969b268     	ldrb	w8, [x19, #0xa6c]
+b9c710: 340001e8     	cbz	w8, 0xb9c74c <_ZN14BluetoothScale12updateWeightEf+0x80>
+b9c714: f9452268     	ldr	x8, [x19, #0xa40]
+b9c718: f9451e69     	ldr	x9, [x19, #0xa38]
+b9c71c: f9452e74     	ldr	x20, [x19, #0xa58]
+b9c720: aa1303e0     	mov	x0, x19
+b9c724: bd091660     	str	s0, [x19, #0x914]
+b9c728: cb090115     	sub	x21, x8, x9
+b9c72c: 97e241b9     	bl	0x42ce10 <_ZN14BluetoothScale11logIfNeededEv@plt>
+b9c730: eb950a9f     	cmp	x20, x21, asr #2
+b9c734: 54000120     	b.eq	0xb9c758 <_ZN14BluetoothScale12updateWeightEf+0x8c>
+b9c738: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+b9c73c: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+b9c740: f94007f5     	ldr	x21, [sp, #0x8]
+b9c744: fc4307e8     	ldr	d8, [sp], #0x30
+b9c748: d65f03c0     	ret
+b9c74c: aa1303e0     	mov	x0, x19
+b9c750: bd091668     	str	s8, [x19, #0x914]
+b9c754: 97e241af     	bl	0x42ce10 <_ZN14BluetoothScale11logIfNeededEv@plt>
+b9c758: 97e2928a     	bl	0x441180 <_ZNSt6__ndk16chrono12steady_clock3nowEv@plt>
+b9c75c: f9400268     	ldr	x8, [x19]
+b9c760: bd491660     	ldr	s0, [x19, #0x914]
+b9c764: aa0003e1     	mov	x1, x0
+b9c768: aa1303e0     	mov	x0, x19
+b9c76c: f9405d08     	ldr	x8, [x8, #0xb8]
+b9c770: d63f0100     	blr	x8
+b9c774: 39430668     	ldrb	w8, [x19, #0xc1]
+b9c778: 340001a8     	cbz	w8, 0xb9c7ac <_ZN14BluetoothScale12updateWeightEf+0xe0>
+b9c77c: b940d669     	ldr	w9, [x19, #0xd4]
+b9c780: b9491668     	ldr	w8, [x19, #0x914]
+b9c784: f940026a     	ldr	x10, [x19]
+b9c788: 1e2703e0     	fmov	s0, wzr
+b9c78c: 7100093f     	cmp	w9, #0x2
+b9c790: b9091e68     	str	w8, [x19, #0x91c]
+b9c794: 1a9f07e8     	cset	w8, ne
+b9c798: 39030268     	strb	w8, [x19, #0xc0]
+b9c79c: f9407948     	ldr	x8, [x10, #0xf0]
+b9c7a0: aa1303e0     	mov	x0, x19
+b9c7a4: d63f0100     	blr	x8
+b9c7a8: 3903067f     	strb	wzr, [x19, #0xc1]
+b9c7ac: f9402e60     	ldr	x0, [x19, #0x58]
+b9c7b0: aa1303e1     	mov	x1, x19
+b9c7b4: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+b9c7b8: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+b9c7bc: f94007f5     	ldr	x21, [sp, #0x8]
+b9c7c0: fc4307e8     	ldr	d8, [sp], #0x30
+b9c7c4: 17e2630f     	b	0x435400 <_ZN5boost8signals26detail11signal_implIFvP5ScaleENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS5_EENSB_IFvRKNS0_10connectionES4_EEENS0_5mutexEEclES4_@plt>
+b9c7c8: 900031e0     	adrp	x0, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b9c7cc: 91386000     	add	x0, x0, #0xe18
+b9c7d0: 97e2868c     	bl	0x43e200 <__cxa_guard_acquire@plt>
+b9c7d4: 34fff920     	cbz	w0, 0xb9c6f8 <_ZN14BluetoothScale12updateWeightEf+0x2c>
+b9c7d8: 97e2926a     	bl	0x441180 <_ZNSt6__ndk16chrono12steady_clock3nowEv@plt>
+b9c7dc: 900031e0     	adrp	x0, 0x11d8000 <_ZN6AppFSK21audioPermissionDeniedE+0xe0>
+b9c7e0: 91386000     	add	x0, x0, #0xe18
+b9c7e4: 97e29cab     	bl	0x443a90 <__cxa_guard_release@plt>
+b9c7e8: 17ffffc4     	b	0xb9c6f8 <_ZN14BluetoothScale12updateWeightEf+0x2c>
+
+0000000000b9c7ec <_ZN12medianFilterIfLi5EEclEf>:
+b9c7ec: d10243ff     	sub	sp, sp, #0x90
+b9c7f0: fd0033e8     	str	d8, [sp, #0x60]
+b9c7f4: a9074ff4     	stp	x20, x19, [sp, #0x70]
+b9c7f8: a9087bfd     	stp	x29, x30, [sp, #0x80]
+b9c7fc: 910203fd     	add	x29, sp, #0x80
+b9c800: d53bd053     	mrs	x19, TPIDR_EL0
+b9c804: f9401668     	ldr	x8, [x19, #0x28]
+b9c808: aa0003e1     	mov	x1, x0
+b9c80c: 4ea01c08     	mov	v8.16b, v0.16b
+b9c810: f81d83a8     	stur	x8, [x29, #-0x28]
+b9c814: a9402408     	ldp	x8, x9, [x0]
+b9c818: f940100b     	ldr	x11, [x0, #0x20]
+b9c81c: cb08012c     	sub	x12, x9, x8
+b9c820: 9342fd8a     	asr	x10, x12, #2
+b9c824: eb0b015f     	cmp	x10, x11
+b9c828: 54000121     	b.ne	0xb9c84c <_ZN12medianFilterIfLi5EEclEf+0x60>
+b9c82c: b400032c     	cbz	x12, 0xb9c890 <_ZN12medianFilterIfLi5EEclEf+0xa4>
+b9c830: f9400c2a     	ldr	x10, [x1, #0x18]
+b9c834: bc004548     	str	s8, [x10], #0x4
+b9c838: eb09015f     	cmp	x10, x9
+b9c83c: f9000c2a     	str	x10, [x1, #0x18]
+b9c840: 54000260     	b.eq	0xb9c88c <_ZN12medianFilterIfLi5EEclEf+0xa0>
+b9c844: f900082a     	str	x10, [x1, #0x10]
+b9c848: 14000012     	b	0xb9c890 <_ZN12medianFilterIfLi5EEclEf+0xa4>
+b9c84c: f9400c2c     	ldr	x12, [x1, #0x18]
+b9c850: bc004588     	str	s8, [x12], #0x4
+b9c854: eb09019f     	cmp	x12, x9
+b9c858: f9000c2c     	str	x12, [x1, #0x18]
+b9c85c: 540000c0     	b.eq	0xb9c874 <_ZN12medianFilterIfLi5EEclEf+0x88>
+b9c860: 91000568     	add	x8, x11, #0x1
+b9c864: eb0a011f     	cmp	x8, x10
+b9c868: f9001028     	str	x8, [x1, #0x20]
+b9c86c: 54000120     	b.eq	0xb9c890 <_ZN12medianFilterIfLi5EEclEf+0xa4>
+b9c870: 14000033     	b	0xb9c93c <_ZN12medianFilterIfLi5EEclEf+0x150>
+b9c874: f9000c28     	str	x8, [x1, #0x18]
+b9c878: 91000568     	add	x8, x11, #0x1
+b9c87c: eb0a011f     	cmp	x8, x10
+b9c880: f9001028     	str	x8, [x1, #0x20]
+b9c884: 54000060     	b.eq	0xb9c890 <_ZN12medianFilterIfLi5EEclEf+0xa4>
+b9c888: 1400002d     	b	0xb9c93c <_ZN12medianFilterIfLi5EEclEf+0x150>
+b9c88c: a9012028     	stp	x8, x8, [x1, #0x10]
+b9c890: 910023e0     	add	x0, sp, #0x8
+b9c894: 910023f4     	add	x20, sp, #0x8
+b9c898: 97e2bf4e     	bl	0x44c5d0 <_ZN5boost15circular_bufferIfNSt6__ndk19allocatorIfEEEC2ERKS4_@plt>
+b9c89c: f94017e8     	ldr	x8, [sp, #0x28]
+b9c8a0: f9400fe9     	ldr	x9, [sp, #0x18]
+b9c8a4: a9037ff4     	stp	x20, xzr, [sp, #0x30]
+b9c8a8: f100011f     	cmp	x8, #0x0
+b9c8ac: 9a8903e8     	csel	x8, xzr, x9, eq
+b9c8b0: a90423f4     	stp	x20, x8, [sp, #0x40]
+b9c8b4: 910103e0     	add	x0, sp, #0x40
+b9c8b8: 9100c3e1     	add	x1, sp, #0x30
+b9c8bc: d100c3a2     	sub	x2, x29, #0x30
+b9c8c0: 97e27750     	bl	0x43a600 <_ZNSt6__ndk16__sortIRNS_6__lessIffEEN5boost10cb_details8iteratorINS4_15circular_bufferIfNS_9allocatorIfEEEENS5_15nonconst_traitsINS5_16allocator_traitsIS9_EEEEEEEEvT0_SG_T_@plt>
+b9c8c4: a94123e9     	ldp	x9, x8, [sp, #0x10]
+b9c8c8: cb08012a     	sub	x10, x9, x8
+b9c8cc: f100215f     	cmp	x10, #0x8
+b9c8d0: 9342fd4b     	asr	x11, x10, #2
+b9c8d4: 540001ad     	b.le	0xb9c908 <_ZN12medianFilterIfLi5EEclEf+0x11c>
+b9c8d8: 321f03ec     	orr	w12, wzr, #0x2
+b9c8dc: f94017ea     	ldr	x10, [sp, #0x28]
+b9c8e0: bc6c7908     	ldr	s8, [x8, x12, lsl #2]
+b9c8e4: eb0a017f     	cmp	x11, x10
+b9c8e8: 5400020c     	b.gt	0xb9c928 <_ZN12medianFilterIfLi5EEclEf+0x13c>
+b9c8ec: f94007e0     	ldr	x0, [sp, #0x8]
+b9c8f0: cb000129     	sub	x9, x9, x0
+b9c8f4: cb89094a     	sub	x10, x10, x9, asr #2
+b9c8f8: 8b0a0908     	add	x8, x8, x10, lsl #2
+b9c8fc: f9000fe8     	str	x8, [sp, #0x18]
+b9c900: b50001c0     	cbnz	x0, 0xb9c938 <_ZN12medianFilterIfLi5EEclEf+0x14c>
+
+
+==================================================
+SYMBOL: _ZN14BluetoothScale14derivedSetTareEf (Address: 0x0000000000ba6b0c)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000ba6b0c <_ZN14BluetoothScale14derivedSetTareEf>:
+ba6b0c: d65f03c0     	ret
+
+0000000000ba6b10 <_ZThn2344_N14BluetoothScaleD1Ev>:
+ba6b10: d124a000     	sub	x0, x0, #0x928
+ba6b14: 17e28deb     	b	0x44a2c0 <_ZN14BluetoothScaleD2Ev@plt>
+
+0000000000ba6b18 <_ZThn2344_N14BluetoothScaleD0Ev>:
+ba6b18: f81e0ff3     	str	x19, [sp, #-0x20]!
+ba6b1c: a9017bfd     	stp	x29, x30, [sp, #0x10]
+ba6b20: 910043fd     	add	x29, sp, #0x10
+ba6b24: d124a013     	sub	x19, x0, #0x928
+ba6b28: aa1303e0     	mov	x0, x19
+ba6b2c: 97e28de5     	bl	0x44a2c0 <_ZN14BluetoothScaleD2Ev@plt>
+ba6b30: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+ba6b34: aa1303e0     	mov	x0, x19
+ba6b38: f84207f3     	ldr	x19, [sp], #0x20
+ba6b3c: 17e23481     	b	0x433d40 <_ZdlPv@plt>
+
+0000000000ba6b40 <_ZNSt6__ndk16__treeINS_12__value_typeINS_4pairIN5Scale13scale_model_tENS3_17product_subtype_tEEENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEENS_19__map_value_compareIS6_SD_NS_4lessIS6_EELb1EEENSA_ISD_EEE7destroyEPNS_11__tree_nodeISD_PvEE>:
+ba6b40: b4000261     	cbz	x1, 0xba6b8c <_ZNSt6__ndk16__treeINS_12__value_typeINS_4pairIN5Scale13scale_model_tENS3_17product_subtype_tEEENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEENS_19__map_value_compareIS6_SD_NS_4lessIS6_EELb1EEENSA_ISD_EEE7destroyEPNS_11__tree_nodeISD_PvEE+0x4c>
+ba6b44: a9be4ff4     	stp	x20, x19, [sp, #-0x20]!
+ba6b48: a9017bfd     	stp	x29, x30, [sp, #0x10]
+ba6b4c: 910043fd     	add	x29, sp, #0x10
+ba6b50: aa0103f3     	mov	x19, x1
+ba6b54: f9400021     	ldr	x1, [x1]
+ba6b58: aa0003f4     	mov	x20, x0
+ba6b5c: 97e276e1     	bl	0x4446e0 <_ZNSt6__ndk16__treeINS_12__value_typeINS_4pairIN5Scale13scale_model_tENS3_17product_subtype_tEEENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEENS_19__map_value_compareIS6_SD_NS_4lessIS6_EELb1EEENSA_ISD_EEE7destroyEPNS_11__tree_nodeISD_PvEE@plt>
+ba6b60: f9400661     	ldr	x1, [x19, #0x8]
+ba6b64: aa1403e0     	mov	x0, x20
+ba6b68: 97e276de     	bl	0x4446e0 <_ZNSt6__ndk16__treeINS_12__value_typeINS_4pairIN5Scale13scale_model_tENS3_17product_subtype_tEEENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEENS_19__map_value_compareIS6_SD_NS_4lessIS6_EELb1EEENSA_ISD_EEE7destroyEPNS_11__tree_nodeISD_PvEE@plt>
+ba6b6c: 3940a268     	ldrb	w8, [x19, #0x28]
+ba6b70: 36000068     	tbz	w8, #0x0, 0xba6b7c <_ZNSt6__ndk16__treeINS_12__value_typeINS_4pairIN5Scale13scale_model_tENS3_17product_subtype_tEEENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEENS_19__map_value_compareIS6_SD_NS_4lessIS6_EELb1EEENSA_ISD_EEE7destroyEPNS_11__tree_nodeISD_PvEE+0x3c>
+ba6b74: f9401e60     	ldr	x0, [x19, #0x38]
+ba6b78: 97e23472     	bl	0x433d40 <_ZdlPv@plt>
+ba6b7c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+ba6b80: aa1303e0     	mov	x0, x19
+ba6b84: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+ba6b88: 17e2346e     	b	0x433d40 <_ZdlPv@plt>
+ba6b8c: d65f03c0     	ret
+
+0000000000ba6b90 <_ZN5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEED0Ev>:
+ba6b90: f81d0ff5     	str	x21, [sp, #-0x30]!
+ba6b94: a9014ff4     	stp	x20, x19, [sp, #0x10]
+ba6b98: a9027bfd     	stp	x29, x30, [sp, #0x20]
+ba6b9c: 910083fd     	add	x29, sp, #0x20
+ba6ba0: b0003028     	adrp	x8, 0x11ab000
+ba6ba4: f9400814     	ldr	x20, [x0, #0x10]
+ba6ba8: f9455508     	ldr	x8, [x8, #0xaa8]
+ba6bac: aa0003f3     	mov	x19, x0
+ba6bb0: 91004108     	add	x8, x8, #0x10
+ba6bb4: f9000008     	str	x8, [x0]
+ba6bb8: b40002b4     	cbz	x20, 0xba6c0c <_ZN5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEED0Ev+0x7c>
+ba6bbc: 91002288     	add	x8, x20, #0x8
+ba6bc0: 885ffd09     	ldaxr	w9, [x8]
+ba6bc4: 71000529     	subs	w9, w9, #0x1
+ba6bc8: 880afd09     	stlxr	w10, w9, [x8]
+ba6bcc: 35ffffaa     	cbnz	w10, 0xba6bc0 <_ZN5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEED0Ev+0x30>
+ba6bd0: 540001e1     	b.ne	0xba6c0c <_ZN5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEED0Ev+0x7c>
+ba6bd4: aa1403f5     	mov	x21, x20
+ba6bd8: f840c6a8     	ldr	x8, [x21], #0xc
+ba6bdc: aa1403e0     	mov	x0, x20
+ba6be0: f9400908     	ldr	x8, [x8, #0x10]
+ba6be4: d63f0100     	blr	x8
+ba6be8: 885ffea8     	ldaxr	w8, [x21]
+ba6bec: 71000508     	subs	w8, w8, #0x1
+ba6bf0: 8809fea8     	stlxr	w9, w8, [x21]
+ba6bf4: 35ffffa9     	cbnz	w9, 0xba6be8 <_ZN5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEED0Ev+0x58>
+ba6bf8: 540000a1     	b.ne	0xba6c0c <_ZN5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEED0Ev+0x7c>
+ba6bfc: f9400288     	ldr	x8, [x20]
+ba6c00: aa1403e0     	mov	x0, x20
+ba6c04: f9400d08     	ldr	x8, [x8, #0x18]
+ba6c08: d63f0100     	blr	x8
+ba6c0c: aa1303e0     	mov	x0, x19
+ba6c10: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+ba6c14: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+ba6c18: f84307f5     	ldr	x21, [sp], #0x30
+ba6c1c: 17e23449     	b	0x433d40 <_ZdlPv@plt>
+
+0000000000ba6c20 <_ZNK5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEE10lock_pimplEv>:
+ba6c20: f9400409     	ldr	x9, [x0, #0x8]
+ba6c24: f9000109     	str	x9, [x8]
+ba6c28: f9400809     	ldr	x9, [x0, #0x10]
+ba6c2c: f9000509     	str	x9, [x8, #0x8]
+ba6c30: b40000c9     	cbz	x9, 0xba6c48 <_ZNK5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEE10lock_pimplEv+0x28>
+ba6c34: 91002128     	add	x8, x9, #0x8
+ba6c38: 885f7d09     	ldxr	w9, [x8]
+ba6c3c: 11000529     	add	w9, w9, #0x1
+ba6c40: 880a7d09     	stxr	w10, w9, [x8]
+ba6c44: 35ffffaa     	cbnz	w10, 0xba6c38 <_ZNK5boost8signals26signalIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFbRKNS0_10connectionES3_bEEENS0_5mutexEE10lock_pimplEv+0x18>
+ba6c48: d65f03c0     	ret
+
+0000000000ba6c4c <_ZN5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEED0Ev>:
+ba6c4c: f81d0ff5     	str	x21, [sp, #-0x30]!
+ba6c50: a9014ff4     	stp	x20, x19, [sp, #0x10]
+ba6c54: a9027bfd     	stp	x29, x30, [sp, #0x20]
+ba6c58: 910083fd     	add	x29, sp, #0x20
+ba6c5c: 90003048     	adrp	x8, 0x11ae000
+ba6c60: f9400814     	ldr	x20, [x0, #0x10]
+ba6c64: f942cd08     	ldr	x8, [x8, #0x598]
+ba6c68: aa0003f3     	mov	x19, x0
+ba6c6c: 91004108     	add	x8, x8, #0x10
+ba6c70: f9000008     	str	x8, [x0]
+ba6c74: b40002b4     	cbz	x20, 0xba6cc8 <_ZN5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEED0Ev+0x7c>
+ba6c78: 91002288     	add	x8, x20, #0x8
+ba6c7c: 885ffd09     	ldaxr	w9, [x8]
+ba6c80: 71000529     	subs	w9, w9, #0x1
+ba6c84: 880afd09     	stlxr	w10, w9, [x8]
+ba6c88: 35ffffaa     	cbnz	w10, 0xba6c7c <_ZN5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEED0Ev+0x30>
+ba6c8c: 540001e1     	b.ne	0xba6cc8 <_ZN5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEED0Ev+0x7c>
+ba6c90: aa1403f5     	mov	x21, x20
+ba6c94: f840c6a8     	ldr	x8, [x21], #0xc
+ba6c98: aa1403e0     	mov	x0, x20
+ba6c9c: f9400908     	ldr	x8, [x8, #0x10]
+ba6ca0: d63f0100     	blr	x8
+ba6ca4: 885ffea8     	ldaxr	w8, [x21]
+ba6ca8: 71000508     	subs	w8, w8, #0x1
+ba6cac: 8809fea8     	stlxr	w9, w8, [x21]
+ba6cb0: 35ffffa9     	cbnz	w9, 0xba6ca4 <_ZN5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEED0Ev+0x58>
+ba6cb4: 540000a1     	b.ne	0xba6cc8 <_ZN5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEED0Ev+0x7c>
+ba6cb8: f9400288     	ldr	x8, [x20]
+ba6cbc: aa1403e0     	mov	x0, x20
+ba6cc0: f9400d08     	ldr	x8, [x8, #0x18]
+ba6cc4: d63f0100     	blr	x8
+ba6cc8: aa1303e0     	mov	x0, x19
+ba6ccc: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+ba6cd0: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+ba6cd4: f84307f5     	ldr	x21, [sp], #0x30
+ba6cd8: 17e2341a     	b	0x433d40 <_ZdlPv@plt>
+
+0000000000ba6cdc <_ZNK5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEE10lock_pimplEv>:
+ba6cdc: f9400409     	ldr	x9, [x0, #0x8]
+ba6ce0: f9000109     	str	x9, [x8]
+ba6ce4: f9400809     	ldr	x9, [x0, #0x10]
+ba6ce8: f9000509     	str	x9, [x8, #0x8]
+ba6cec: b40000c9     	cbz	x9, 0xba6d04 <_ZNK5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEE10lock_pimplEv+0x28>
+ba6cf0: 91002128     	add	x8, x9, #0x8
+ba6cf4: 885f7d09     	ldxr	w9, [x8]
+ba6cf8: 11000529     	add	w9, w9, #0x1
+ba6cfc: 880a7d09     	stxr	w10, w9, [x8]
+ba6d00: 35ffffaa     	cbnz	w10, 0xba6cf4 <_ZNK5boost8signals26signalIFvbaENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS2_EENS8_IFvRKNS0_10connectionEbaEEENS0_5mutexEE10lock_pimplEv+0x18>
+ba6d04: d65f03c0     	ret
+
+0000000000ba6d08 <_ZN5boost8signals26signalIFvN5Scale14scale_status_tEENS0_19optional_last_valueIvEEiNSt6__ndk14lessIiEENS_8functionIS4_EENSA_IFvRKNS0_10connectionES3_EEENS0_5mutexEED0Ev>:
+ba6d08: f81d0ff5     	str	x21, [sp, #-0x30]!
+
+
+==================================================
+SYMBOL: _ZN14BluetoothScale9readTouchEh (Address: 0x0000000000b9e908)
+==================================================
+
+/Users/mario/Perfect-Scale-Open/libcore.so:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000b9e908 <_ZN14BluetoothScale9readTouchEh>:
+b9e908: a9bc5ff8     	stp	x24, x23, [sp, #-0x40]!
+b9e90c: a90157f6     	stp	x22, x21, [sp, #0x10]
+b9e910: a9024ff4     	stp	x20, x19, [sp, #0x20]
+b9e914: a9037bfd     	stp	x29, x30, [sp, #0x30]
+b9e918: 9100c3fd     	add	x29, sp, #0x30
+b9e91c: b9490008     	ldr	w8, [x0, #0x900]
+b9e920: 2a0103f4     	mov	w20, w1
+b9e924: aa0003f3     	mov	x19, x0
+b9e928: 12001c35     	and	w21, w1, #0xff
+b9e92c: 4a010118     	eor	w24, w8, w1
+b9e930: 97e28a14     	bl	0x441180 <_ZNSt6__ndk16chrono12steady_clock3nowEv@plt>
+b9e934: 52984008     	mov	w8, #0xc200             // =49664
+b9e938: 72a17d68     	movk	w8, #0xbeb, lsl #16
+b9e93c: 12001f16     	and	w22, w24, #0xff
+b9e940: 8b080017     	add	x23, x0, x8
+b9e944: 36001038     	tbz	w24, #0x0, 0xb9eb48 <_ZN14BluetoothScale9readTouchEh+0x240>
+b9e948: b940d268     	ldr	w8, [x19, #0xd0]
+b9e94c: 71000d1f     	cmp	w8, #0x3
+b9e950: 540004eb     	b.lt	0xb9e9ec <_ZN14BluetoothScale9readTouchEh+0xe4>
+b9e954: f9400a60     	ldr	x0, [x19, #0x10]
+b9e958: 120002a2     	and	w2, w21, #0x1
+b9e95c: 320003e1     	orr	w1, wzr, #0x1
+b9e960: 97e245ec     	bl	0x430110 <_ZN5boost8signals26detail11signal_implIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS5_EENSB_IFbRKNS0_10connectionES4_bEEENS0_5mutexEEclES4_b@plt>
+b9e964: 37000f35     	tbnz	w21, #0x0, 0xb9eb48 <_ZN14BluetoothScale9readTouchEh+0x240>
+b9e968: f9050e77     	str	x23, [x19, #0xa18]
+b9e96c: 36080f16     	tbz	w22, #0x1, 0xb9eb4c <_ZN14BluetoothScale9readTouchEh+0x244>
+b9e970: b940d268     	ldr	w8, [x19, #0xd0]
+b9e974: 7100091f     	cmp	w8, #0x2
+b9e978: 5400062d     	b.le	0xb9ea3c <_ZN14BluetoothScale9readTouchEh+0x134>
+b9e97c: f9400a60     	ldr	x0, [x19, #0x10]
+b9e980: 530106a2     	ubfx	w2, w21, #1, #1
+b9e984: 321f03e1     	orr	w1, wzr, #0x2
+b9e988: 97e245e2     	bl	0x430110 <_ZN5boost8signals26detail11signal_implIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS5_EENSB_IFbRKNS0_10connectionES4_bEEENS0_5mutexEEclES4_b@plt>
+b9e98c: 37080e15     	tbnz	w21, #0x1, 0xb9eb4c <_ZN14BluetoothScale9readTouchEh+0x244>
+b9e990: f9051277     	str	x23, [x19, #0xa20]
+b9e994: 36100df6     	tbz	w22, #0x2, 0xb9eb50 <_ZN14BluetoothScale9readTouchEh+0x248>
+b9e998: b940d268     	ldr	w8, [x19, #0xd0]
+b9e99c: 7100091f     	cmp	w8, #0x2
+b9e9a0: 5400076d     	b.le	0xb9ea8c <_ZN14BluetoothScale9readTouchEh+0x184>
+b9e9a4: f9400a60     	ldr	x0, [x19, #0x10]
+b9e9a8: 53020aa2     	ubfx	w2, w21, #2, #1
+b9e9ac: 321e03e1     	orr	w1, wzr, #0x4
+b9e9b0: 97e245d8     	bl	0x430110 <_ZN5boost8signals26detail11signal_implIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS5_EENSB_IFbRKNS0_10connectionES4_bEEENS0_5mutexEEclES4_b@plt>
+b9e9b4: 37100cf5     	tbnz	w21, #0x2, 0xb9eb50 <_ZN14BluetoothScale9readTouchEh+0x248>
+b9e9b8: f9051677     	str	x23, [x19, #0xa28]
+b9e9bc: 36180cd6     	tbz	w22, #0x3, 0xb9eb54 <_ZN14BluetoothScale9readTouchEh+0x24c>
+b9e9c0: b940d268     	ldr	w8, [x19, #0xd0]
+b9e9c4: 7100091f     	cmp	w8, #0x2
+b9e9c8: 540008ad     	b.le	0xb9eadc <_ZN14BluetoothScale9readTouchEh+0x1d4>
+b9e9cc: f9400a60     	ldr	x0, [x19, #0x10]
+b9e9d0: 53030ea2     	ubfx	w2, w21, #3, #1
+b9e9d4: 321d03e1     	orr	w1, wzr, #0x8
+b9e9d8: 97e245ce     	bl	0x430110 <_ZN5boost8signals26detail11signal_implIFbN12scale_parser18standardUpdateBitsEbEN5purei19breakIfTrueCombinerEiNSt6__ndk14lessIiEENS_8functionIS5_EENSB_IFbRKNS0_10connectionES4_bEEENS0_5mutexEEclES4_b@plt>
+b9e9dc: 37180bd5     	tbnz	w21, #0x3, 0xb9eb54 <_ZN14BluetoothScale9readTouchEh+0x24c>
+b9e9e0: f9051a77     	str	x23, [x19, #0xa30]
+b9e9e4: 35000bb6     	cbnz	w22, 0xb9eb58 <_ZN14BluetoothScale9readTouchEh+0x250>
+b9e9e8: 1400006c     	b	0xb9eb98 <_ZN14BluetoothScale9readTouchEh+0x290>
+b9e9ec: 36000af5     	tbz	w21, #0x0, 0xb9eb48 <_ZN14BluetoothScale9readTouchEh+0x240>
+b9e9f0: 7100091f     	cmp	w8, #0x2
+b9e9f4: 54000aa1     	b.ne	0xb9eb48 <_ZN14BluetoothScale9readTouchEh+0x240>
+b9e9f8: f0003068     	adrp	x8, 0x11ad000
+b9e9fc: b989066a     	ldrsw	x10, [x19, #0x904]
+b9ea00: f946b108     	ldr	x8, [x8, #0xd60]
+b9ea04: f9400109     	ldr	x9, [x8]
+b9ea08: b86a792b     	ldr	w11, [x9, x10, lsl #2]
+b9ea0c: 7100057f     	cmp	w11, #0x1
+b9ea10: 540008e1     	b.ne	0xb9eb2c <_ZN14BluetoothScale9readTouchEh+0x224>
+b9ea14: 9100054a     	add	x10, x10, #0x1
+b9ea18: b909066a     	str	w10, [x19, #0x904]
+b9ea1c: f9400508     	ldr	x8, [x8, #0x8]
+b9ea20: cb090108     	sub	x8, x8, x9
+b9ea24: eb88095f     	cmp	x10, x8, asr #2
+b9ea28: 54000841     	b.ne	0xb9eb30 <_ZN14BluetoothScale9readTouchEh+0x228>
+b9ea2c: 320003e8     	orr	w8, wzr, #0x1
+b9ea30: 39242268     	strb	w8, [x19, #0x908]
+b9ea34: b909067f     	str	wzr, [x19, #0x904]
+b9ea38: 14000040     	b	0xb9eb38 <_ZN14BluetoothScale9readTouchEh+0x230>
+b9ea3c: 36080895     	tbz	w21, #0x1, 0xb9eb4c <_ZN14BluetoothScale9readTouchEh+0x244>
+b9ea40: 7100091f     	cmp	w8, #0x2
+b9ea44: 54000841     	b.ne	0xb9eb4c <_ZN14BluetoothScale9readTouchEh+0x244>
+b9ea48: f0003068     	adrp	x8, 0x11ad000
+b9ea4c: b989066a     	ldrsw	x10, [x19, #0x904]
+b9ea50: f946b108     	ldr	x8, [x8, #0xd60]
+b9ea54: f9400109     	ldr	x9, [x8]
+b9ea58: b86a792b     	ldr	w11, [x9, x10, lsl #2]
+b9ea5c: 7100097f     	cmp	w11, #0x2
+b9ea60: 54000a81     	b.ne	0xb9ebb0 <_ZN14BluetoothScale9readTouchEh+0x2a8>
+b9ea64: 9100054a     	add	x10, x10, #0x1
+b9ea68: b909066a     	str	w10, [x19, #0x904]
+b9ea6c: f9400508     	ldr	x8, [x8, #0x8]
+b9ea70: cb090108     	sub	x8, x8, x9
+b9ea74: eb88095f     	cmp	x10, x8, asr #2
+b9ea78: 540009e1     	b.ne	0xb9ebb4 <_ZN14BluetoothScale9readTouchEh+0x2ac>
+b9ea7c: 320003e8     	orr	w8, wzr, #0x1
+b9ea80: 39242268     	strb	w8, [x19, #0x908]
+b9ea84: b909067f     	str	wzr, [x19, #0x904]
+b9ea88: 1400004d     	b	0xb9ebbc <_ZN14BluetoothScale9readTouchEh+0x2b4>
+b9ea8c: 36100635     	tbz	w21, #0x2, 0xb9eb50 <_ZN14BluetoothScale9readTouchEh+0x248>
+b9ea90: 7100091f     	cmp	w8, #0x2
+b9ea94: 540005e1     	b.ne	0xb9eb50 <_ZN14BluetoothScale9readTouchEh+0x248>
+b9ea98: f0003068     	adrp	x8, 0x11ad000
+b9ea9c: b989066a     	ldrsw	x10, [x19, #0x904]
+b9eaa0: f946b108     	ldr	x8, [x8, #0xd60]
+b9eaa4: f9400109     	ldr	x9, [x8]
+b9eaa8: b86a792b     	ldr	w11, [x9, x10, lsl #2]
+b9eaac: 7100117f     	cmp	w11, #0x4
+b9eab0: 54000921     	b.ne	0xb9ebd4 <_ZN14BluetoothScale9readTouchEh+0x2cc>
+b9eab4: 9100054a     	add	x10, x10, #0x1
+b9eab8: b909066a     	str	w10, [x19, #0x904]
+b9eabc: f9400508     	ldr	x8, [x8, #0x8]
+b9eac0: cb090108     	sub	x8, x8, x9
+b9eac4: eb88095f     	cmp	x10, x8, asr #2
+b9eac8: 54000881     	b.ne	0xb9ebd8 <_ZN14BluetoothScale9readTouchEh+0x2d0>
+b9eacc: 320003e8     	orr	w8, wzr, #0x1
+b9ead0: 39242268     	strb	w8, [x19, #0x908]
+b9ead4: b909067f     	str	wzr, [x19, #0x904]
+b9ead8: 14000042     	b	0xb9ebe0 <_ZN14BluetoothScale9readTouchEh+0x2d8>
+b9eadc: 361803d5     	tbz	w21, #0x3, 0xb9eb54 <_ZN14BluetoothScale9readTouchEh+0x24c>
+b9eae0: 7100091f     	cmp	w8, #0x2
+b9eae4: 54000381     	b.ne	0xb9eb54 <_ZN14BluetoothScale9readTouchEh+0x24c>
+b9eae8: f0003068     	adrp	x8, 0x11ad000
+b9eaec: b989066a     	ldrsw	x10, [x19, #0x904]
+b9eaf0: f946b108     	ldr	x8, [x8, #0xd60]
+b9eaf4: f9400109     	ldr	x9, [x8]
+b9eaf8: b86a792b     	ldr	w11, [x9, x10, lsl #2]
+b9eafc: 7100217f     	cmp	w11, #0x8
+b9eb00: 540007c1     	b.ne	0xb9ebf8 <_ZN14BluetoothScale9readTouchEh+0x2f0>
+b9eb04: 9100054a     	add	x10, x10, #0x1
+b9eb08: b909066a     	str	w10, [x19, #0x904]
+b9eb0c: f9400508     	ldr	x8, [x8, #0x8]
+b9eb10: cb090108     	sub	x8, x8, x9
+b9eb14: eb88095f     	cmp	x10, x8, asr #2
+b9eb18: 54000721     	b.ne	0xb9ebfc <_ZN14BluetoothScale9readTouchEh+0x2f4>
+b9eb1c: 320003e8     	orr	w8, wzr, #0x1
+b9eb20: 39242268     	strb	w8, [x19, #0x908]
+b9eb24: b909067f     	str	wzr, [x19, #0x904]
+b9eb28: 14000037     	b	0xb9ec04 <_ZN14BluetoothScale9readTouchEh+0x2fc>
+b9eb2c: b909067f     	str	wzr, [x19, #0x904]
+b9eb30: 39642268     	ldrb	w8, [x19, #0x908]
+b9eb34: 340000a8     	cbz	w8, 0xb9eb48 <_ZN14BluetoothScale9readTouchEh+0x240>
+b9eb38: f9400268     	ldr	x8, [x19]
+b9eb3c: aa1303e0     	mov	x0, x19
+b9eb40: f9404d08     	ldr	x8, [x8, #0x98]
+b9eb44: d63f0100     	blr	x8

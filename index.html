@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartScale Companion - Premium Kitchen Scale Dashboard</title>
+    <meta name="description" content="A premium, glassmorphic Web Bluetooth dashboard compatible with Perfect Company kitchen scales. Read raw and tared weights, monitor capacitive touch pads, and toggle hardware backlights.">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Premium Icons Support -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Dashboard Header -->
+        <header>
+            <h1><i class="fa-solid fa-scale-balanced" style="color: var(--accent-cyan);"></i> SMARTSCALE COMPANION</h1>
+            <p>Premium Web Bluetooth Telemetry compatible with Smart Kitchen Scales</p>
+        </header>
+
+        <!-- Tab Navigation Bar -->
+        <nav class="tab-bar">
+            <button id="btn-tab-general" class="tab-btn active">
+                <i class="fa-solid fa-scale-balanced"></i> General Weight
+            </button>
+            <button id="btn-tab-pourover" class="tab-btn">
+                <i class="fa-solid fa-mug-hot"></i> Coffee Pourover
+            </button>
+        </nav>
+
+        <!-- Main Dashboard Grid - General Weight View -->
+        <main class="dashboard-grid tab-content active-tab" id="view-general">
+            
+            <!-- Left Side: Main Scale Controls & Readout -->
+            <section class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-gauge-high"></i> Live Telemetry</span>
+                    <button id="btn-connect" class="btn btn-primary">
+                        <i class="fa-solid fa-bluetooth"></i> Connect Scale
+                    </button>
+                </div>
+
+                <!-- Connection Info Banner -->
+                <div id="status-container" class="connection-bar status-disconnected">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span id="status-text">Disconnected</span>
+                    </div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-family: 'Inter', sans-serif;">GATT Protocol</span>
+                </div>
+
+                <!-- Weight Display Dial -->
+                <div class="weight-display-container">
+                    <svg class="weight-gauge-svg">
+                        <!-- Circle Radius is 120, Circumference is 2 * PI * 120 = 753.98 (754) -->
+                        <circle class="gauge-track" cx="140" cy="140" r="120"></circle>
+                        <circle id="gauge-fill" class="gauge-fill" cx="140" cy="140" r="120"></circle>
+                    </svg>
+                    
+                    <div class="weight-readout">
+                        <div id="weight-number" class="weight-number">0.0</div>
+                        <div id="weight-unit" class="weight-unit">g</div>
+                    </div>
+                </div>
+
+                <center><div id="raw-subtext" class="weight-raw-sub">Raw: 0.0g | Offset: 0.0g</div></center>
+
+                <!-- Scale Action Buttons -->
+                <div class="controls-grid">
+                    <button id="btn-tare" class="btn btn-secondary btn-full" disabled>
+                        <i class="fa-solid fa-arrows-rotate"></i> Tare Scale
+                    </button>
+                    <button id="btn-zero" class="btn btn-secondary" disabled>
+                        <i class="fa-solid fa-circle-xmark"></i> Zero Offset
+                    </button>
+                    <button id="btn-toggle-units" class="btn btn-secondary">
+                        <i class="fa-solid fa-right-left"></i> Change Unit
+                    </button>
+                    <button id="btn-log" class="btn btn-primary btn-full" disabled>
+                        <i class="fa-solid fa-camera"></i> Snapshot Log
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Side: Logging History & Local Simulator Panel -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                
+                <!-- History Log Card -->
+                <section class="card" style="flex: 1;">
+                    <div class="card-title">
+                        <span><i class="fa-solid fa-list-check"></i> History Snapshot Logs</span>
+                        <button id="btn-clear-history" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                            <i class="fa-solid fa-trash-can"></i> Clear
+                        </button>
+                    </div>
+                    
+                    <div id="history-list" class="history-container">
+                        <div class="history-empty">No logged readings yet</div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Main Dashboard Grid - Coffee Pourover View -->
+        <main class="dashboard-grid tab-content" id="view-pourover">
+            
+            <!-- Left Side: Main Coffee Timer & Telemetry -->
+            <section class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-mug-hot"></i> Pourover Telemetry</span>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button id="btn-coffee-connect" class="btn btn-primary" style="padding: 0.4rem 0.85rem; font-size: 0.8rem; border-radius: 10px;">
+                            <i class="fa-solid fa-bluetooth"></i> Connect Scale
+                        </button>
+                        <span id="pourover-status-badge" class="badge badge-disconnected">Disconnected</span>
+                    </div>
+                </div>
+
+                <!-- Weight & Timer Dual Dial -->
+                <div class="weight-display-container">
+                    <svg class="weight-gauge-svg">
+                        <circle class="gauge-track" cx="140" cy="140" r="120"></circle>
+                        <circle id="pourover-gauge-fill" class="gauge-fill" cx="140" cy="140" r="120" style="stroke: var(--accent-cyan);"></circle>
+                    </svg>
+                    
+                    <div class="weight-readout" style="width: 240px;">
+                        <!-- Timer digits -->
+                        <div id="coffee-timer" class="coffee-timer-digits">00:00</div>
+                        
+                        <!-- Weight digits -->
+                        <div class="coffee-weight-sub">
+                            <span id="coffee-weight-number" class="coffee-weight-number">0.0</span>
+                            <span id="coffee-weight-unit" class="coffee-weight-unit">g</span>
+                        </div>
+                        
+                        <!-- Real-time Flow Rate -->
+                        <div class="flow-rate-readout">
+                            <i class="fa-solid fa-water" style="color: var(--accent-cyan); font-size: 0.8rem;"></i>
+                            <span id="coffee-flow-rate">0.0</span> <span style="font-size: 0.75rem; color: var(--text-muted);">g/s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <center><div id="coffee-raw-subtext" class="weight-raw-sub">Raw: 0.0g | Water Offset: 0.0g</div></center>
+
+                <!-- Coffee Action Buttons -->
+                <div class="controls-grid">
+                    <button id="btn-coffee-timer-toggle" class="btn btn-primary btn-full" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 4px 15px -3px rgba(16, 185, 129, 0.4);">
+                        <i class="fa-solid fa-play"></i> Start Brew Timer
+                    </button>
+                    <button id="btn-coffee-timer-reset" class="btn btn-secondary">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Timer
+                    </button>
+                    <button id="btn-coffee-tare-water" class="btn btn-secondary">
+                        <i class="fa-solid fa-droplet"></i> Tare Water
+                    </button>
+                    <button id="btn-coffee-tare-vessel" class="btn btn-secondary btn-full">
+                        <i class="fa-solid fa-arrows-rotate"></i> Tare Vessel (Scale)
+                    </button>
+                </div>
+
+                <div class="pourover-options-row" style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.4); padding: 0.75rem 1rem; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.02);">
+                    <span class="led-label" style="font-size: 0.85rem;"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-cyan); margin-right: 0.25rem;"></i> Auto-Start Timer on Pour</span>
+                    <label class="switch switch-sm">
+                        <input id="chk-auto-start" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Right Side: Recipe & Brew Steps -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                
+                <!-- Recipe Builder Card -->
+                <section class="card">
+                    <div class="card-title">
+                        <span><i class="fa-solid fa-sliders"></i> Recipe Builder</span>
+                    </div>
+                    
+                    <div class="recipe-inputs">
+                        <!-- Coffee grounds input & slider -->
+                        <div class="recipe-input-group">
+                            <div class="recipe-label-row" style="display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--text-secondary);">Coffee Dose</span>
+                                <span class="recipe-value-accent" style="font-weight: 700; color: var(--accent-cyan);"><span id="lbl-coffee-dose">15.0</span>g</span>
+                            </div>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input id="slider-coffee-dose" class="sim-slider" type="range" min="10" max="50" step="0.5" value="15" style="flex: 1;">
+                                <input id="num-coffee-dose" type="number" class="num-input" min="10" max="50" step="0.1" value="15.0" style="width: 70px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; color: #fff; padding: 0.35rem 0.5rem; text-align: center; font-family: 'Outfit'; font-weight: 600; outline: none;">
+                            </div>
+                        </div>
+                        
+                        <!-- Ratio presets & slider -->
+                        <div class="recipe-input-group" style="margin-top: 1.25rem;">
+                            <div class="recipe-label-row" style="display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--text-secondary);">Brew Ratio</span>
+                                <span class="recipe-value-accent" style="font-weight: 700; color: var(--accent-cyan);">1:<span id="lbl-brew-ratio">16.0</span></span>
+                            </div>
+                            <div class="ratio-presets" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="ratio-pill" data-ratio="15">1:15</button>
+                                <button class="ratio-pill active" data-ratio="16">1:16</button>
+                                <button class="ratio-pill" data-ratio="16.6">1:16.6</button>
+                                <button class="ratio-pill" data-ratio="17">1:17</button>
+                                <button id="btn-ratio-custom" class="ratio-pill">Custom</button>
+                            </div>
+                            <div id="custom-ratio-container" class="custom-ratio-slide" style="display: none; margin-top: 0.75rem;">
+                                <input id="slider-brew-ratio" class="sim-slider" type="range" min="10" max="25" step="0.5" value="16">
+                            </div>
+                        </div>
+                        
+                        <!-- Calculations box grid -->
+                        <div class="recipe-summary-grid" style="margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="recipe-summary-box" style="background: rgba(15, 23, 42, 0.4); padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.02); text-align: center;">
+                                <div class="summary-box-label" style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem;">Target Water</div>
+                                <div id="calc-target-water" class="summary-box-value" style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">240.0g</div>
+                            </div>
+                            <div class="recipe-summary-box" style="background: rgba(15, 23, 42, 0.4); padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.02); text-align: center;">
+                                <div class="summary-box-label" style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem;">Bloom Water</div>
+                                <div id="calc-bloom-water" class="summary-box-value" style="font-size: 1.3rem; font-weight: 700; color: var(--accent-cyan);">45.0g</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Brew Phase Guide Card -->
+                <section class="card" style="flex: 1;">
+                    <div class="card-title">
+                        <span><i class="fa-solid fa-list-ol"></i> Brew Phase Guide</span>
+                        <span id="brew-phase-badge" class="badge badge-idle" style="padding: 0.25rem 0.65rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Idle</span>
+                    </div>
+                    
+                    <div class="phases-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Step 1: Prep -->
+                        <div id="step-prep" class="phase-step active-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.3); border: 1px solid rgba(255, 255, 255, 0.02); transition: var(--transition-standard);">
+                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-cyan); color: #000; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">1</div>
+                            <div class="phase-step-content" style="flex: 1;">
+                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Prepare Brewer & Filter</div>
+                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Add dry grounds, then click <strong style="color: var(--text-secondary);">Tare Vessel</strong>.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Bloom -->
+                        <div id="step-bloom" class="phase-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.2); border: 1px solid rgba(255, 255, 255, 0.01); transition: var(--transition-standard); opacity: 0.6;">
+                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">2</div>
+                            <div class="phase-step-content" style="flex: 1;">
+                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Blooming Phase</div>
+                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Pour <span id="step-bloom-target" style="color: var(--accent-cyan); font-weight: 600;">45.0g</span> water. Wait <span style="color: var(--accent-cyan); font-weight: 600;">35s</span> for degassing.</div>
+                            </div>
+                            <div id="bloom-timer-display" style="font-family: 'Outfit'; font-weight: 700; font-size: 1.1rem; color: var(--accent-amber); display: none;">35</div>
+                        </div>
+                        
+                        <!-- Step 3: Main Pour -->
+                        <div id="step-brew" class="phase-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.2); border: 1px solid rgba(255, 255, 255, 0.01); transition: var(--transition-standard); opacity: 0.6;">
+                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">3</div>
+                            <div class="phase-step-content" style="flex: 1;">
+                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Main Pour</div>
+                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Pour steadily to <span id="step-brew-target" style="color: var(--accent-cyan); font-weight: 600;">240.0g</span>. Flow target: <span style="color: var(--accent-emerald); font-weight: 600;">1.5 - 3.0 g/s</span>.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4: Drawdown -->
+                        <div id="step-drawdown" class="phase-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.2); border: 1px solid rgba(255, 255, 255, 0.01); transition: var(--transition-standard); opacity: 0.6;">
+                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">4</div>
+                            <div class="phase-step-content" style="flex: 1;">
+                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Drawdown & Finish</div>
+                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Wait for water to filter completely, then stop timer.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Session Summary Panel -->
+                    <div id="brew-summary-panel" class="brew-summary-panel" style="display: none; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.06); animation: simFadeIn 0.4s ease-out;">
+                        <div style="font-weight: 700; text-align: center; margin-bottom: 0.75rem; font-size: 1rem; color: var(--accent-emerald); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-circle-check"></i> Brew Session Completed!
+                        </div>
+                        <div class="recipe-summary-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; text-align: center;">
+                            <div style="background: rgba(16, 185, 129, 0.08); padding: 0.5rem; border-radius: 10px; border: 1px solid rgba(16, 185, 129, 0.15);">
+                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.15rem;">Duration</div>
+                                <div id="summary-total-time" style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary);">00:00</div>
+                            </div>
+                            <div style="background: rgba(6, 182, 212, 0.08); padding: 0.5rem; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.15rem;">Yield</div>
+                                <div id="summary-total-yield" style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary);">0.0g</div>
+                            </div>
+                            <div style="background: rgba(245, 158, 11, 0.08); padding: 0.5rem; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.15);">
+                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.15rem;">Avg Flow</div>
+                                <div id="summary-avg-flow" style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary);">0.0g/s</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Dynamic Instructions Footer -->
+        <footer>
+            <p>System requirements: Google Chrome / Edge version 56+ with Bluetooth enabled.</p>
+            <p style="margin-top: 0.25rem;">
+                Note: Web Bluetooth operates strictly over <i class="fa-solid fa-lock" style="font-size: 0.75rem;"></i> HTTPS or `localhost` due to browser security restrictions.
+            </p>
+            <p style="margin-top: 0.75rem; font-size: 0.75rem;">
+                SmartScale-Companion &copy; 2026. Made with <i class="fa-solid fa-heart" style="color: var(--accent-rose);"></i> for open hardware.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Floating Hardware Simulator Widget (Corner) -->
+    <div id="sim-widget" class="sim-widget-floating">
+        <div class="sim-widget-header">
+            <div class="sim-widget-title">
+                <i class="fa-solid fa-laptop-code"></i>
+                <span>Simulate BLE</span>
+                <span class="sim-widget-dot"></span>
+            </div>
+            <label class="switch switch-sm">
+                <input id="sim-switch" type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <!-- Simulator Controls Panel -->
+        <div id="sim-panel" class="sim-panel-floating">
+            <div class="sim-row">
+                <div class="sim-header">
+                    <span>Simulated Weight</span>
+                    <span id="sim-weight-val" style="font-weight: 600; color: var(--accent-rose);">0.0g</span>
+                </div>
+                <input id="sim-weight" class="sim-slider" type="range" min="-100" max="4500" step="0.5" value="0">
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic Connect -->
+    <script src="app.js"></script>
+</body>
+</html>
