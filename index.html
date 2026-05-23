@@ -170,10 +170,10 @@
             </section>
 
             <!-- Right Side: Recipe & Brew Steps -->
-            <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <div class="pourover-sidebar">
                 
                 <!-- Recipe Builder Card -->
-                <section class="card">
+                <section class="card recipe-builder-card">
                     <div class="card-title">
                         <span><i class="fa-solid fa-sliders"></i> Recipe Builder</span>
                     </div>
@@ -224,47 +224,47 @@
                 </section>
                 
                 <!-- Brew Phase Guide Card -->
-                <section class="card" style="flex: 1;">
+                <section id="brew-guide-card" class="card brew-guide-card" style="flex: 1;">
                     <div class="card-title">
                         <span><i class="fa-solid fa-list-ol"></i> Brew Phase Guide</span>
-                        <span id="brew-phase-badge" class="badge badge-idle" style="padding: 0.25rem 0.65rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Idle</span>
+                        <span id="brew-phase-badge" class="badge badge-idle">Idle</span>
                     </div>
                     
                     <div class="phases-container" style="display: flex; flex-direction: column; gap: 1rem;">
                         <!-- Step 1: Prep -->
-                        <div id="step-prep" class="phase-step active-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.3); border: 1px solid rgba(255, 255, 255, 0.02); transition: var(--transition-standard);">
-                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-cyan); color: #000; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">1</div>
+                        <div id="step-prep" class="phase-step active-step">
+                            <div class="phase-step-num">1</div>
                             <div class="phase-step-content" style="flex: 1;">
-                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Prepare Brewer & Filter</div>
-                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Add dry grounds, then click <strong style="color: var(--text-secondary);">Tare Vessel</strong>.</div>
+                                <div class="phase-step-title">Prepare Brewer & Filter</div>
+                                <div class="phase-step-desc">Add dry grounds, then click <strong style="color: var(--text-secondary);">Tare Vessel</strong>.</div>
                             </div>
                         </div>
                         
                         <!-- Step 2: Bloom -->
-                        <div id="step-bloom" class="phase-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.2); border: 1px solid rgba(255, 255, 255, 0.01); transition: var(--transition-standard); opacity: 0.6;">
-                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">2</div>
+                        <div id="step-bloom" class="phase-step">
+                            <div class="phase-step-num">2</div>
                             <div class="phase-step-content" style="flex: 1;">
-                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Blooming Phase</div>
-                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Pour <span id="step-bloom-target" style="color: var(--accent-cyan); font-weight: 600;">45.0g</span> water. Wait <span style="color: var(--accent-cyan); font-weight: 600;">35s</span> for degassing.</div>
+                                <div class="phase-step-title">Blooming Phase</div>
+                                <div class="phase-step-desc">Pour <span id="step-bloom-target" style="color: var(--accent-cyan); font-weight: 600;">45.0g</span> water. Wait <span style="color: var(--accent-cyan); font-weight: 600;">35s</span> for degassing.</div>
                             </div>
                             <div id="bloom-timer-display" style="font-family: 'Outfit'; font-weight: 700; font-size: 1.1rem; color: var(--accent-amber); display: none;">35</div>
                         </div>
                         
                         <!-- Step 3: Main Pour -->
-                        <div id="step-brew" class="phase-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.2); border: 1px solid rgba(255, 255, 255, 0.01); transition: var(--transition-standard); opacity: 0.6;">
-                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">3</div>
+                        <div id="step-brew" class="phase-step">
+                            <div class="phase-step-num">3</div>
                             <div class="phase-step-content" style="flex: 1;">
-                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Main Pour</div>
-                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Pour steadily to <span id="step-brew-target" style="color: var(--accent-cyan); font-weight: 600;">240.0g</span>. Flow target: <span style="color: var(--accent-emerald); font-weight: 600;">1.5 - 3.0 g/s</span>.</div>
+                                <div class="phase-step-title">Main Pour</div>
+                                <div class="phase-step-desc">Pour steadily to <span id="step-brew-target" style="color: var(--accent-cyan); font-weight: 600;">240.0g</span>. Flow target: <span style="color: var(--accent-emerald); font-weight: 600;">1.5 - 3.0 g/s</span>.</div>
                             </div>
                         </div>
                         
                         <!-- Step 4: Drawdown -->
-                        <div id="step-drawdown" class="phase-step" style="display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.2); border: 1px solid rgba(255, 255, 255, 0.01); transition: var(--transition-standard); opacity: 0.6;">
-                            <div class="phase-step-num" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">4</div>
+                        <div id="step-drawdown" class="phase-step">
+                            <div class="phase-step-num">4</div>
                             <div class="phase-step-content" style="flex: 1;">
-                                <div class="phase-step-title" style="font-weight: 600; font-size: 0.95rem;">Drawdown & Finish</div>
-                                <div class="phase-step-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">Wait for water to filter completely, then stop timer.</div>
+                                <div class="phase-step-title">Drawdown & Finish</div>
+                                <div class="phase-step-desc">Wait for water to filter completely, then stop timer.</div>
                             </div>
                         </div>
                     </div>
