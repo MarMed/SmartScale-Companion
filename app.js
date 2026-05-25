@@ -8,7 +8,7 @@ const state = {
     shouldTareOnNextReading: false, // Flag for initial tare on connect
     units: 'g', // 'g' or 'oz'
     history: [],
-    
+
     // BLE device references
     device: null,
     weightChar: null,
@@ -51,7 +51,7 @@ const SCALE_RAW_ADC_CHAR_UUID = 'b5600007-a0f8-16af-bb42-1d3b642ec2e1'; // Zero-
 const SCALE_WEIGHT_CHAR_UUID = 'b5600003-a0f8-16af-bb42-1d3b642ec2e1';   // Microcontroller-smoothed weight
 
 // Max capacity for display gauge (grams)
-const MAX_SCALE_CAPACITY_GRAMS = 5000; 
+const MAX_SCALE_CAPACITY_GRAMS = 7000;
 
 // DOM Elements
 const elements = {
@@ -62,19 +62,19 @@ const elements = {
     btnToggleUnits: document.getElementById('btn-toggle-units'),
     btnLog: document.getElementById('btn-log'),
     btnClearHistory: document.getElementById('btn-clear-history'),
-    
+
     statusText: document.getElementById('status-text'),
     statusContainer: document.getElementById('status-container'),
     weightNumber: document.getElementById('weight-number'),
     weightUnit: document.getElementById('weight-unit'),
     rawSubtext: document.getElementById('raw-subtext'),
     gaugeFill: document.getElementById('gauge-fill'),
-    
+
     simSwitch: document.getElementById('sim-switch'),
     simPanel: document.getElementById('sim-panel'),
     simWeightSlider: document.getElementById('sim-weight'),
     simWeightVal: document.getElementById('sim-weight-val'),
-    
+
     historyList: document.getElementById('history-list'),
 
     // --- Tab Navigation Elements ---
@@ -143,7 +143,7 @@ function setupEventListeners() {
     elements.btnToggleUnits.addEventListener('click', toggleUnits);
     elements.btnLog.addEventListener('click', addCurrentToHistory);
     elements.btnClearHistory.addEventListener('click', clearHistory);
-    
+
     elements.simSwitch.addEventListener('change', handleSimulatorToggle);
     elements.simWeightSlider.addEventListener('input', handleSimWeightChange);
 
@@ -200,19 +200,19 @@ let updateScheduled = false;
 function updateUI() {
     if (updateScheduled) return;
     updateScheduled = true;
-    
+
     requestAnimationFrame(() => {
         updateScheduled = false;
-        
+
         const rawValStr = formatWeight(state.rawWeightGrams);
         const isActive = state.isConnected || state.isSimulator;
 
         // --- 1. General Tab UI Update ---
         const displayWeight = getDisplayWeightGrams();
         const formattedVal = formatWeight(displayWeight);
-        
+
         elements.weightNumber.textContent = formattedVal;
-        
+
         // Adjust typography size dynamically for lb:oz to ensure standard sizing and fit
         if (state.units === 'lb:oz') {
             elements.weightNumber.style.fontSize = '3.2rem';
@@ -222,14 +222,14 @@ function updateUI() {
             elements.weightNumber.style.fontSize = '4rem';
             elements.weightUnit.textContent = state.units;
         }
-        
+
         // Update gauge radial path
         // Stroke dasharray is 754 (2 * PI * 120 radius)
         const strokeDash = 754;
         const progressFraction = Math.max(0, Math.min(1, Math.abs(displayWeight) / MAX_SCALE_CAPACITY_GRAMS));
         const offset = strokeDash - (progressFraction * strokeDash);
         elements.gaugeFill.style.strokeDashoffset = offset;
-        
+
         // Change dial color if weight is negative or near capacity
         if (displayWeight < -5) {
             elements.gaugeFill.style.stroke = 'var(--accent-rose)';
@@ -243,12 +243,12 @@ function updateUI() {
                 elements.weightUnit.style.color = 'var(--accent-cyan)';
             }
         }
-        
+
         // Update raw telemetry footer
         const tareValStr = formatWeight(state.tareOffsetGrams);
         const unitLabel = state.units === 'lb:oz' ? ' lb oz' : state.units;
         elements.rawSubtext.textContent = `Raw: ${rawValStr}${unitLabel} | Offset: ${tareValStr}${unitLabel}`;
-        
+
         // Enable/disable buttons depending on state
         elements.btnTare.disabled = !isActive;
         elements.btnZero.disabled = !isActive || state.tareOffsetGrams === 0;
@@ -258,12 +258,12 @@ function updateUI() {
         if (state.activeTab === 'pourover') {
             const currentWaterWeight = Math.max(0, state.rawWeightGrams - state.coffee.waterTareOffset);
             elements.coffeeWeightNumber.textContent = currentWaterWeight.toFixed(1);
-            
+
             // Circular progress fill for pourover towards target water weight
             const pFraction = Math.max(0, Math.min(1, currentWaterWeight / (state.coffee.targetWaterGrams || 240.0)));
             const pOffset = strokeDash - (pFraction * strokeDash);
             elements.pouroverGaugeFill.style.strokeDashoffset = pOffset;
-            
+
             // Dynamic ring styling
             if (currentWaterWeight >= state.coffee.targetWaterGrams * 0.98 && currentWaterWeight <= state.coffee.targetWaterGrams * 1.02) {
                 elements.pouroverGaugeFill.style.stroke = 'var(--accent-emerald)'; // Target reached
@@ -278,11 +278,11 @@ function updateUI() {
                 elements.pouroverGaugeFill.style.stroke = 'var(--accent-cyan)';
                 elements.pouroverGaugeFill.style.filter = 'drop-shadow(0 0 8px var(--accent-cyan-glow))';
             }
-            
+
             // Raw text footer
             const offsetValStr = state.coffee.waterTareOffset.toFixed(1);
             elements.coffeeRawSubtext.textContent = `Raw: ${state.rawWeightGrams.toFixed(1)}g | Water Offset: ${offsetValStr}g`;
-            
+
             // Badges and status
             if (state.isSimulator) {
                 elements.pouroverStatusBadge.textContent = 'Simulator';
@@ -329,17 +329,17 @@ async function handleConnectToggle() {
         disconnectScale();
         return;
     }
-    
+
     // Turn off simulator if active before attempting hardware connection
     if (state.isSimulator) {
         elements.simSwitch.checked = false;
         handleSimulatorToggle();
     }
-    
+
     state.isConnecting = true;
     updateStatus('Connecting...', 'connecting');
     updateConnectButtons('connecting');
-    
+
     try {
         console.log('Requesting Bluetooth Device...');
         state.device = await navigator.bluetooth.requestDevice({
@@ -356,17 +356,17 @@ async function handleConnectToggle() {
             ],
             optionalServices: [SCALE_SERVICE_UUID, 'battery_service', 'device_information']
         });
-        
+
         state.device.addEventListener('gattserverdisconnected', onDeviceDisconnected);
-        
+
         console.log('Connecting to GATT Server...');
         const server = await state.device.gatt.connect();
-        
+
         console.log('Discovering Primary Scale Service...');
         const service = await server.getPrimaryService(SCALE_SERVICE_UUID);
-        
+
         console.log('Discovering Weight Characteristics...');
-        
+
         // Weight notification characteristic (b5600003)
         try {
             state.weightChar = await service.getCharacteristic(SCALE_WEIGHT_CHAR_UUID);
@@ -377,19 +377,19 @@ async function handleConnectToggle() {
             console.error('Weight characteristic connection failed:', e);
             throw e;
         }
-        
+
         // Complete connection setup
         state.isConnected = true;
         state.isConnecting = false;
         updateStatus('Connected to Scale', 'connected');
         updateConnectButtons('connected');
-        
+
         // Reset scale reading and arm the initial tare flag
         state.rawWeightGrams = 0.0;
         state.tareOffsetGrams = 0.0;
         state.shouldTareOnNextReading = true; // Automatically tare on first reading
         updateUI();
-        
+
     } catch (error) {
         console.error('Bluetooth connection error:', error);
         disconnectScale();
@@ -407,22 +407,22 @@ function disconnectScale() {
 // GATT Server Disconnected Callback
 function onDeviceDisconnected() {
     console.log('Bluetooth Scale Disconnected.');
-    
+
     // Clean up notifications
     if (state.weightChar) {
         state.weightChar.removeEventListener('characteristicvaluechanged', handleWeightNotification);
     }
-    
+
     // Reset state
     state.isConnected = false;
     state.isConnecting = false;
     state.weightChar = null;
     state.device = null;
     state.shouldTareOnNextReading = false;
-    
+
     updateStatus('Disconnected', 'disconnected');
     updateConnectButtons('disconnected');
-    
+
     updateUI();
 }
 
@@ -434,13 +434,13 @@ let lastLogTime = 0;
 // Extract Weight Bytes and convert to Grams
 function handleWeightNotification(event) {
     const dataView = event.target.value;
-    
+
     // Support both 3-byte (raw BLE) and 4-byte (wrapped JNI) payloads
     if (dataView.byteLength < 3) {
         console.warn(`Packet ignored because length ${dataView.byteLength} is less than 3 bytes.`);
         return;
     }
-    
+
     let b1, b2, b3;
     if (dataView.byteLength === 3) {
         b1 = dataView.getUint8(0); // LSB
@@ -451,27 +451,27 @@ function handleWeightNotification(event) {
         b2 = dataView.getUint8(2); // Mid
         b3 = dataView.getUint8(3); // MSB
     }
-    
+
     // Combine into 24-bit integer
     let rawVal = b1 | (b2 << 8) | (b3 << 16);
-    
+
     // Sign extension from 24-bit to 32-bit signed integer
     if (rawVal & 0x800000) {
         rawVal -= 0x1000000;
     }
-    
+
     // Extract calibrated weight in grams using the hardware scale factor (623.05 counts/gram)
     const grams = rawVal / 623.05;
-    
+
     // Throttle telemetry logging to once every 1000ms to prevent browser thread congestion
     const now = Date.now();
     if (now - lastLogTime > 1000) {
         console.log(`Telemetry update: rawVal=${rawVal}, grams=${grams.toFixed(2)}g`);
         lastLogTime = now;
     }
-    
+
     updateWeightState(grams);
-    
+
     // Automatically tare the very first reading on connect
     if (state.shouldTareOnNextReading) {
         state.tareOffsetGrams = grams;
@@ -487,16 +487,16 @@ function handleWeightNotification(event) {
 
 function handleSimulatorToggle() {
     state.isSimulator = elements.simSwitch.checked;
-    
+
     if (state.isSimulator) {
         // Turn off BLE connection if connected
         if (state.isConnected) {
             disconnectScale();
         }
-        
+
         elements.simPanel.classList.add('visible');
         updateStatus('Simulator Mode', 'connected'); // Highlight green for simulator active
-        
+
         // Seed default weight and apply initial tare immediately
         const initWeight = parseFloat(elements.simWeightSlider.value);
         state.rawWeightGrams = initWeight;
@@ -504,16 +504,16 @@ function handleSimulatorToggle() {
         state.coffee.vesselTareOffset = initWeight;
         state.coffee.waterTareOffset = initWeight;
         state.shouldTareOnNextReading = false;
-        
+
         // Reset flow rates
         state.flow.history = [];
         state.flow.rate = 0.0;
-        
+
         updateUI();
     } else {
         elements.simPanel.classList.remove('visible');
         updateStatus('Disconnected', 'disconnected');
-        
+
         // Reset scale reading
         state.rawWeightGrams = 0.0;
         state.tareOffsetGrams = 0.0;
@@ -525,10 +525,10 @@ function handleSimulatorToggle() {
 
 function handleSimWeightChange() {
     if (!state.isSimulator) return;
-    
+
     const sliderVal = parseFloat(elements.simWeightSlider.value);
     elements.simWeightVal.textContent = `${sliderVal.toFixed(1)}g`;
-    
+
     updateWeightState(sliderVal);
 }
 
@@ -545,14 +545,14 @@ function updateStatus(text, className) {
 function addCurrentToHistory() {
     const displayWeight = getDisplayWeightGrams();
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    
+
     const logItem = {
         id: Date.now(),
         weight: displayWeight,
         time: timestamp,
         units: state.units
     };
-    
+
     state.history.unshift(logItem); // Insert at start
     renderHistory();
 }
@@ -567,7 +567,7 @@ function renderHistory() {
         elements.historyList.innerHTML = `<div class="history-empty">No logged readings yet</div>`;
         return;
     }
-    
+
     const itemsHTML = state.history.map(item => {
         const formatted = formatWeight(item.weight, item.units);
         const unitLabel = item.units === 'lb:oz' ? ' lb oz' : item.units;
@@ -581,7 +581,7 @@ function renderHistory() {
             </div>
         `;
     }).join('');
-    
+
     elements.historyList.innerHTML = itemsHTML;
 }
 
@@ -599,17 +599,17 @@ function updateWeightState(grams) {
 // Switch between General Scale and Coffee Pourover dashboard tabs
 function switchTab(tabName) {
     if (state.activeTab === tabName) return;
-    
+
     state.activeTab = tabName;
-    
+
     if (tabName === 'general') {
         elements.btnTabGeneral.classList.add('active');
         elements.btnTabPourover.classList.remove('active');
-        
+
         // Toggle display directly in JS to bypass inline HTML stylesheet overrides
         elements.viewGeneral.style.display = 'grid';
         elements.viewPourover.style.display = 'none';
-        
+
         elements.viewGeneral.classList.add('active-tab');
         elements.viewPourover.classList.remove('active-tab');
         if (window.location.hash !== '#general') {
@@ -618,21 +618,21 @@ function switchTab(tabName) {
     } else {
         elements.btnTabGeneral.classList.remove('active');
         elements.btnTabPourover.classList.add('active');
-        
+
         // Toggle display directly in JS to bypass inline HTML stylesheet overrides
         elements.viewGeneral.style.display = 'none';
         elements.viewPourover.style.display = 'grid';
-        
+
         elements.viewGeneral.classList.remove('active-tab');
         elements.viewPourover.classList.add('active-tab');
         if (window.location.hash !== '#coffee') {
             window.location.hash = 'coffee';
         }
-        
+
         // Initial recipe synchronization
         updateRecipeCalculations();
     }
-    
+
     updateUI();
 }
 
@@ -641,7 +641,7 @@ function handleURLRouting() {
     const hash = window.location.hash;
     const path = window.location.pathname;
     const params = new URLSearchParams(window.location.search);
-    
+
     if (hash === '#coffee' || path.endsWith('/coffee') || params.get('view') === 'coffee' || params.get('tab') === 'coffee') {
         switchTab('pourover');
     } else {
@@ -654,19 +654,19 @@ function updateConnectButtons(status) {
     if (status === 'disconnected') {
         elements.btnConnect.textContent = 'Connect Scale';
         elements.btnConnect.className = 'btn btn-primary';
-        
+
         elements.btnCoffeeConnect.innerHTML = '<i class="fa-brands fa-bluetooth"></i> Connect Scale';
         elements.btnCoffeeConnect.className = 'btn btn-primary';
     } else if (status === 'connecting') {
         elements.btnConnect.textContent = 'Cancel';
         elements.btnConnect.className = 'btn btn-secondary';
-        
+
         elements.btnCoffeeConnect.textContent = 'Cancel';
         elements.btnCoffeeConnect.className = 'btn btn-secondary';
     } else if (status === 'connected') {
         elements.btnConnect.textContent = 'Disconnect';
         elements.btnConnect.className = 'btn btn-danger';
-        
+
         elements.btnCoffeeConnect.innerHTML = '<i class="fa-solid fa-power-off"></i> Disconnect';
         elements.btnCoffeeConnect.className = 'btn btn-danger';
     }
@@ -693,11 +693,11 @@ function handleCoffeeDoseNumChange() {
 
 function handleRatioPillClick(e) {
     const pill = e.currentTarget;
-    
+
     // Deactivate others
     document.querySelectorAll('.ratio-presets .ratio-pill').forEach(btn => btn.classList.remove('active'));
     pill.classList.add('active');
-    
+
     if (pill.id === 'btn-ratio-custom') {
         elements.customRatioContainer.style.display = 'block';
         const customRatio = parseFloat(elements.sliderBrewRatio.value);
@@ -707,7 +707,7 @@ function handleRatioPillClick(e) {
         const ratio = parseFloat(pill.dataset.ratio);
         state.coffee.ratio = ratio;
     }
-    
+
     updateRecipeCalculations();
 }
 
@@ -721,13 +721,13 @@ function handleBrewRatioSliderChange() {
 function updateRecipeCalculations() {
     state.coffee.targetWaterGrams = state.coffee.doseGrams * state.coffee.ratio;
     state.coffee.bloomWaterGrams = state.coffee.doseGrams * 3.0; // Standard 3x dry weight bloom
-    
+
     // Update label nodes
     elements.lblCoffeeDose.textContent = state.coffee.doseGrams.toFixed(1);
     elements.lblBrewRatio.textContent = state.coffee.ratio.toFixed(1);
     elements.calcTargetWater.textContent = `${state.coffee.targetWaterGrams.toFixed(1)}g`;
     elements.calcBloomWater.textContent = `${state.coffee.bloomWaterGrams.toFixed(1)}g`;
-    
+
     elements.stepBloomTarget.textContent = `${state.coffee.bloomWaterGrams.toFixed(1)}g`;
     elements.stepBrewTarget.textContent = `${state.coffee.targetWaterGrams.toFixed(1)}g`;
 }
@@ -737,14 +737,14 @@ function updateRecipeCalculations() {
 function tareVessel() {
     state.coffee.vesselTareOffset = state.rawWeightGrams;
     state.coffee.waterTareOffset = state.rawWeightGrams; // Start water measurement here
-    
+
     resetBrewProgress();
     updateUI();
 }
 
 function tareWater() {
     state.coffee.waterTareOffset = state.rawWeightGrams;
-    
+
     // Reset steps back to step 1 (Prep) and arm auto-start if timer isn't running
     if (!state.timer.running && state.brew.phase === 'prep') {
         state.timer.autoStartArmed = elements.chkAutoStart.checked;
@@ -761,18 +761,18 @@ function handleAutoStartChange() {
 
 function setBrewPhase(phase) {
     state.brew.phase = phase;
-    
+
     // Set badge text & styles
     elements.brewPhaseBadge.className = `badge badge-${phase}`;
     elements.brewPhaseBadge.textContent = phase === 'prep' ? 'Idle' : phase;
-    
+
     const steps = [
         { el: elements.stepPrep, num: 1 },
         { el: elements.stepBloom, num: 2 },
         { el: elements.stepBrew, num: 3 },
         { el: elements.stepDrawdown, num: 4 }
     ];
-    
+
     // Reset all steps to dimmed
     steps.forEach(step => {
         step.el.classList.remove('active-step', 'completed-step');
@@ -782,9 +782,9 @@ function setBrewPhase(phase) {
         numCircle.style.background = 'rgba(255, 255, 255, 0.05)';
         numCircle.style.color = 'var(--text-secondary)';
     });
-    
+
     elements.bloomTimerDisplay.style.display = 'none';
-    
+
     if (phase === 'prep') {
         elements.stepPrep.classList.add('active-step');
         elements.stepPrep.style.opacity = '1';
@@ -793,7 +793,7 @@ function setBrewPhase(phase) {
         elements.stepPrep.classList.add('completed-step');
         elements.stepPrep.style.opacity = '0.9';
         elements.stepPrep.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
-        
+
         elements.stepBloom.classList.add('active-step');
         elements.stepBloom.style.opacity = '1';
         elements.bloomTimerDisplay.style.display = 'block';
@@ -802,7 +802,7 @@ function setBrewPhase(phase) {
         elements.stepPrep.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
         elements.stepBloom.classList.add('completed-step');
         elements.stepBloom.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
-        
+
         elements.stepBrew.classList.add('active-step');
         elements.stepBrew.style.opacity = '1';
     } else if (phase === 'drawdown') {
@@ -812,7 +812,7 @@ function setBrewPhase(phase) {
         elements.stepBloom.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
         elements.stepBrew.classList.add('completed-step');
         elements.stepBrew.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
-        
+
         elements.stepDrawdown.classList.add('active-step');
         elements.stepDrawdown.style.opacity = '1';
     } else if (phase === 'finished') {
@@ -824,7 +824,7 @@ function setBrewPhase(phase) {
         elements.stepBrew.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
         elements.stepDrawdown.classList.add('completed-step');
         elements.stepDrawdown.querySelector('.phase-step-num').innerHTML = '<i class="fa-solid fa-check"></i>';
-        
+
         displayBrewSummary();
     }
 }
@@ -845,9 +845,9 @@ function displayBrewSummary() {
     const mins = Math.floor(state.timer.seconds / 60);
     const secs = state.timer.seconds % 60;
     const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    
+
     const yieldGrams = Math.max(0, state.rawWeightGrams - state.coffee.waterTareOffset);
-    
+
     let avgFlow = 0.0;
     const rates = state.brew.flowRatesRecorded.filter(r => r > 0.1);
     if (rates.length > 0) {
@@ -855,7 +855,7 @@ function displayBrewSummary() {
     } else {
         avgFlow = yieldGrams > 5 ? yieldGrams / (state.timer.seconds || 1) : 0.0;
     }
-    
+
     elements.summaryTotalTime.textContent = timeStr;
     elements.summaryTotalYield.textContent = `${yieldGrams.toFixed(1)}g`;
     elements.summaryAvgFlow.textContent = `${avgFlow.toFixed(1)} g/s`;
@@ -881,21 +881,21 @@ function toggleCoffeeTimer() {
 
 function startCoffeeTimer() {
     if (state.timer.running) return;
-    
+
     state.timer.running = true;
     state.timer.startedAt = Date.now() - (state.timer.seconds * 1000);
-    
+
     elements.btnCoffeeTimerToggle.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Brew Timer';
     elements.btnCoffeeTimerToggle.style.background = 'linear-gradient(135deg, #f43f5e 0%, #be123c 100%)';
     elements.btnCoffeeTimerToggle.style.boxShadow = '0 4px 15px -3px rgba(244, 63, 94, 0.4)';
-    
+
     state.timer.intervalId = setInterval(() => {
         state.timer.seconds = Math.floor((Date.now() - state.timer.startedAt) / 1000);
-        
+
         const mins = Math.floor(state.timer.seconds / 60);
         const secs = state.timer.seconds % 60;
         elements.coffeeTimer.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        
+
         // Record flow rates for average calculations
         if (state.flow.rate > 0.1 && (state.brew.phase === 'bloom' || state.brew.phase === 'brew')) {
             state.brew.flowRatesRecorded.push(state.flow.rate);
@@ -905,11 +905,11 @@ function startCoffeeTimer() {
 
 function stopCoffeeTimer() {
     if (!state.timer.running) return;
-    
+
     state.timer.running = false;
     clearInterval(state.timer.intervalId);
     state.timer.intervalId = null;
-    
+
     elements.btnCoffeeTimerToggle.innerHTML = '<i class="fa-solid fa-play"></i> Resume Brew Timer';
     elements.btnCoffeeTimerToggle.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
     elements.btnCoffeeTimerToggle.style.boxShadow = '0 4px 15px -3px rgba(16, 185, 129, 0.4)';
@@ -918,20 +918,20 @@ function stopCoffeeTimer() {
 function startBloomCountdown() {
     state.brew.bloomSecondsLeft = 35;
     elements.bloomTimerDisplay.textContent = state.brew.bloomSecondsLeft;
-    
+
     if (state.brew.bloomTimerId) {
         clearInterval(state.brew.bloomTimerId);
     }
-    
+
     state.brew.bloomTimerId = setInterval(() => {
         if (state.brew.phase !== 'bloom') {
             clearInterval(state.brew.bloomTimerId);
             return;
         }
-        
+
         state.brew.bloomSecondsLeft--;
         elements.bloomTimerDisplay.textContent = state.brew.bloomSecondsLeft;
-        
+
         if (state.brew.bloomSecondsLeft <= 0) {
             clearInterval(state.brew.bloomTimerId);
             if (state.brew.phase === 'bloom') {
@@ -945,17 +945,17 @@ function startBloomCountdown() {
 
 function handlePouroverTelemetry(weight) {
     const now = Date.now();
-    
+
     // 1. Sliding window flow calculation
     state.flow.history.push({ time: now, weight: weight });
     state.flow.history = state.flow.history.filter(item => item.time > now - 1200);
-    
+
     if (state.flow.history.length >= 2) {
         const first = state.flow.history[0];
         const last = state.flow.history[state.flow.history.length - 1];
         const dt = (last.time - first.time) / 1000;
         const dw = last.weight - first.weight;
-        
+
         if (dt > 0.15) {
             let instantaneousRate = dw / dt;
             if (instantaneousRate < 0.1 && instantaneousRate > -0.1) {
@@ -970,12 +970,12 @@ function handlePouroverTelemetry(weight) {
     } else {
         state.flow.rate = 0.0;
     }
-    
+
     elements.coffeeFlowRate.textContent = state.flow.rate.toFixed(1);
-    
+
     // 2. Auto-Start Detection
     const currentWaterWeight = Math.max(0, weight - state.coffee.waterTareOffset);
-    
+
     if (state.timer.autoStartArmed && !state.timer.running && state.brew.phase === 'prep') {
         if (currentWaterWeight > 1.5) {
             state.timer.autoStartArmed = false;
@@ -985,7 +985,7 @@ function handlePouroverTelemetry(weight) {
             console.log("Brew auto-start triggered! Water weight: " + currentWaterWeight.toFixed(1) + "g");
         }
     }
-    
+
     // 3. Auto Brew Phase Advance
     if (state.timer.running) {
         if (state.brew.phase === 'bloom') {
